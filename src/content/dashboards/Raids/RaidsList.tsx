@@ -17,7 +17,7 @@ const ITEMS_PER_PAGE = 10;
 
 function RaidsList() {
   const [filters, setFilters] = useState<RaidFilters>({});
-  const [sortOption, setSortOption] = useState<SortOption>('posted_desc');
+  const [sortOption, setSortOption] = useState<SortOption>('scheduled_asc');
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<ViewMode>('list');
 
@@ -64,6 +64,17 @@ function RaidsList() {
         return false;
       }
 
+      if (
+        filters.scheduledFrom &&
+        raid.scheduledTime < filters.scheduledFrom
+      ) {
+        return false;
+      }
+
+      if (filters.scheduledTo && raid.scheduledTime > filters.scheduledTo) {
+        return false;
+      }
+
       return true;
     });
   };
@@ -72,6 +83,12 @@ function RaidsList() {
     const sorted = [...raids];
 
     switch (sortOption) {
+      case 'scheduled_asc':
+        sorted.sort((a, b) => a.scheduledTime - b.scheduledTime);
+        break;
+      case 'scheduled_desc':
+        sorted.sort((a, b) => b.scheduledTime - a.scheduledTime);
+        break;
       case 'price_asc':
         sorted.sort((a, b) => a.price - b.price);
         break;

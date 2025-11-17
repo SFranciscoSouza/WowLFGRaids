@@ -23,12 +23,12 @@ interface RaidsSortingProps {
 }
 
 const sortOptions: { value: SortOption; label: string }[] = [
-  { value: 'posted_desc', label: 'Newest First' },
-  { value: 'posted_asc', label: 'Oldest First' },
+  { value: 'scheduled_asc', label: 'Soonest First' },
+  { value: 'scheduled_desc', label: 'Latest First' },
   { value: 'price_asc', label: 'Price: Low to High' },
   { value: 'price_desc', label: 'Price: High to Low' },
-  { value: 'signups_desc', label: 'Most Signups' },
-  { value: 'karma_desc', label: 'Highest Karma' }
+  { value: 'posted_desc', label: 'Newest Posted' },
+  { value: 'posted_asc', label: 'Oldest Posted' }
 ];
 
 const RaidsSorting: FC<RaidsSortingProps> = ({
@@ -42,7 +42,7 @@ const RaidsSorting: FC<RaidsSortingProps> = ({
 
   const currentLabel =
     sortOptions.find((opt) => opt.value === sortOption)?.label ||
-    'Newest First';
+    'Soonest First';
 
   const handleViewModeChange = (
     _event: React.MouseEvent<HTMLElement>,

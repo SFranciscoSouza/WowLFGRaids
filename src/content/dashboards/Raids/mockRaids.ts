@@ -1,5 +1,10 @@
 import { RaidPost } from 'src/models/raid';
 
+// Helper to create scheduled times relative to now
+const now = Date.now();
+const HOUR = 60 * 60 * 1000;
+const DAY = 24 * HOUR;
+
 export const mockRaidPosts: RaidPost[] = [
   {
     id: 'raid-1',
@@ -23,6 +28,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 59 * 60 * 1000,
+    scheduledTime: now + 3 * HOUR, // Tonight, 3 hours from now
     avgPayTime: '3 Hours',
     payLimit: '30 Minutes',
     isSaved: true,
@@ -97,6 +103,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 25 * 60 * 1000,
+    scheduledTime: now + 5 * HOUR, // Tonight, 5 hours from now
     avgPayTime: '4 Hours',
     payLimit: '45 Minutes',
     isSaved: false,
@@ -171,6 +178,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 2 * 60 * 60 * 1000,
+    scheduledTime: now + 1 * DAY + 20 * HOUR, // Tomorrow evening
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
     isSaved: true,
@@ -238,6 +246,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 15 * 60 * 1000,
+    scheduledTime: now + 2 * HOUR, // Tonight, 2 hours from now
     avgPayTime: '3 Hours',
     payLimit: '30 Minutes',
     isSaved: false,
@@ -312,6 +321,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 3 * 60 * 60 * 1000,
+    scheduledTime: now + 6 * HOUR, // Tonight, 6 hours from now
     avgPayTime: '1 Hour',
     payLimit: '15 Minutes',
     isSaved: true,
@@ -371,6 +381,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 45 * 60 * 1000,
+    scheduledTime: now + 2 * DAY + 19 * HOUR, // Day after tomorrow, evening
     avgPayTime: '2.5 Hours',
     payLimit: '25 Minutes',
     isSaved: false,
@@ -438,6 +449,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 10 * 60 * 1000,
+    scheduledTime: now + 4 * HOUR, // Tonight, 4 hours from now
     avgPayTime: '5 Hours',
     payLimit: '60 Minutes',
     isSaved: true,
@@ -512,6 +524,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 90 * 60 * 1000,
+    scheduledTime: now + 3 * DAY + 21 * HOUR, // 3 days from now, late evening
     avgPayTime: '3 Hours',
     payLimit: '30 Minutes',
     isSaved: false,
@@ -579,6 +592,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 4 * 60 * 60 * 1000,
+    scheduledTime: now + 5 * DAY + 18 * HOUR, // 5 days, afternoon
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
     isSaved: true,
@@ -629,7 +643,7 @@ export const mockRaidPosts: RaidPost[] = [
       healer: 'any',
       dps: 'any'
     },
-    note: 'Val\'anyr fragments run. Yogg+0 included.'
+    note: "Val'anyr fragments run. Yogg+0 included."
   },
   {
     id: 'raid-10',
@@ -653,6 +667,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 5 * 60 * 60 * 1000,
+    scheduledTime: now + 1 * DAY + 14 * HOUR, // Tomorrow afternoon
     avgPayTime: '2.5 Hours',
     payLimit: '25 Minutes',
     isSaved: false,
@@ -727,6 +742,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 32 * 60 * 1000,
+    scheduledTime: now + 1 * HOUR, // Tonight, 1 hour from now (soonest!)
     avgPayTime: '3.5 Hours',
     payLimit: '35 Minutes',
     isSaved: true,
@@ -794,6 +810,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 6 * 60 * 60 * 1000,
+    scheduledTime: now + 4 * DAY + 20 * HOUR, // 4 days, evening
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
     isSaved: false,
@@ -861,6 +878,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 20 * 60 * 1000,
+    scheduledTime: now + 7 * DAY + 22 * HOUR, // 1 week, late night
     avgPayTime: '4 Hours',
     payLimit: '45 Minutes',
     isSaved: true,
@@ -928,6 +946,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 85 * 60 * 1000,
+    scheduledTime: now + 8 * HOUR, // Later tonight
     avgPayTime: '1.5 Hours',
     payLimit: '15 Minutes',
     isSaved: false,
@@ -995,6 +1014,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 3.5 * 60 * 60 * 1000,
+    scheduledTime: now + 6 * DAY + 19 * HOUR, // 6 days, evening
     avgPayTime: '2.5 Hours',
     payLimit: '25 Minutes',
     isSaved: true,
@@ -1062,6 +1082,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 55 * 60 * 1000,
+    scheduledTime: now + 1 * DAY + 21 * HOUR, // Tomorrow late evening
     avgPayTime: '2.5 Hours',
     payLimit: '25 Minutes',
     isSaved: false,
@@ -1129,6 +1150,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 42 * 60 * 1000,
+    scheduledTime: now + 10 * DAY + 20 * HOUR, // 10 days, evening
     avgPayTime: '1.5 Hours',
     payLimit: '20 Minutes',
     isSaved: true,
@@ -1196,6 +1218,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 2.5 * 60 * 60 * 1000,
+    scheduledTime: now + 2 * DAY + 14 * HOUR, // 2 days, afternoon
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
     isSaved: false,
@@ -1263,6 +1286,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 72 * 60 * 1000,
+    scheduledTime: now + 9 * DAY + 21 * HOUR, // 9 days, late evening
     avgPayTime: '2.5 Hours',
     payLimit: '25 Minutes',
     isSaved: true,
@@ -1337,6 +1361,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 12 * 60 * 1000,
+    scheduledTime: now + 14 * DAY + 20 * HOUR, // 2 weeks, evening
     avgPayTime: '4.5 Hours',
     payLimit: '50 Minutes',
     isSaved: false,
@@ -1404,6 +1429,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 4.5 * 60 * 60 * 1000,
+    scheduledTime: now + 11 * DAY + 18 * HOUR, // 11 days, afternoon
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
     isSaved: true,
@@ -1471,6 +1497,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 38 * 60 * 1000,
+    scheduledTime: now + 12 * DAY + 19 * HOUR, // 12 days, evening
     avgPayTime: '3 Hours',
     payLimit: '30 Minutes',
     isSaved: false,
@@ -1514,7 +1541,7 @@ export const mockRaidPosts: RaidPost[] = [
       healer: 'any',
       dps: 'any'
     },
-    note: 'Full SWP clear. Thori\'dal bow reserved to guild.'
+    note: "Full SWP clear. Thori'dal bow reserved to guild."
   },
   {
     id: 'raid-23',
@@ -1538,6 +1565,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 95 * 60 * 1000,
+    scheduledTime: now + 1.5 * HOUR, // Tonight, 1.5 hours from now
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
     isSaved: true,
@@ -1605,6 +1633,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 18 * 60 * 1000,
+    scheduledTime: now + 13 * DAY + 22 * HOUR, // 13 days, late night
     avgPayTime: '4 Hours',
     payLimit: '45 Minutes',
     isSaved: false,
@@ -1672,6 +1701,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 5.5 * 60 * 60 * 1000,
+    scheduledTime: now + 3 * DAY + 18 * HOUR, // 3 days, afternoon
     avgPayTime: '1.5 Hours',
     payLimit: '15 Minutes',
     isSaved: true,

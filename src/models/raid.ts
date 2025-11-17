@@ -88,6 +88,7 @@ export interface RaidPost {
   rolesNeeded: Role[];
   classesAllowed: WoWClass[] | 'all';
   postedAt: number;
+  scheduledTime: number; // Unix timestamp for scheduled run time
   avgPayTime: string;
   payLimit: string;
   isSaved: boolean;
@@ -119,9 +120,13 @@ export interface RaidFilters {
   rolesNeeded?: Role[];
   isSaved?: boolean;
   posterTiers?: PosterTier[];
+  scheduledFrom?: number; // Unix timestamp
+  scheduledTo?: number; // Unix timestamp
 }
 
 export type SortOption =
+  | 'scheduled_asc'
+  | 'scheduled_desc'
   | 'price_asc'
   | 'price_desc'
   | 'posted_desc'

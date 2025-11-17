@@ -6,18 +6,27 @@ import {
   Select,
   MenuItem,
   TextField,
-  Checkbox,
-  FormControlLabel,
   Button,
   Grid,
-  Typography
+  Typography,
+  Chip
 } from '@mui/material';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import {
+  addDays,
+  endOfDay,
+  startOfDay,
+  endOfWeek,
+  isWeekend,
+  nextSaturday
+} from 'date-fns';
 import {
   RaidFilters,
   GameVersion,
   RaidDifficulty,
   Faction,
-  Role,
   Expansion,
   RETAIL_RAIDS,
   CLASSIC_RAIDS,
@@ -75,15 +84,47 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
     });
   };
 
-  const handleRoleToggle = (role: Role) => {
-    const currentRoles = filters.rolesNeeded || [];
-    const newRoles = currentRoles.includes(role)
-      ? currentRoles.filter((r) => r !== role)
-      : [...currentRoles, role];
+  const handleScheduledFromChange = (date: Date | null) => {
+    onFilterChange({
+      ...filters,
+      scheduledFrom: date ? date.getTime() : undefined
+    });
+  };
+
+  const handleScheduledToChange = (date: Date | null) => {
+    onFilterChange({
+      ...filters,
+      scheduledTo: date ? date.getTime() : undefined
+    });
+  };
+
+  const handleQuickFilter = (type: 'today' | 'week' | 'weekend') => {
+    const now = new Date();
+    let from: number;
+    let to: number;
+
+    switch (type) {
+      case 'today':
+        from = startOfDay(now).getTime();
+        to = endOfDay(now).getTime();
+        break;
+      case 'week':
+        from = now.getTime();
+        to = endOfWeek(now, { weekStartsOn: 1 }).getTime();
+        break;
+      case 'weekend':
+        const saturday = isWeekend(now) ? now : nextSaturday(now);
+        from = startOfDay(saturday).getTime();
+        to = endOfDay(addDays(saturday, 1)).getTime();
+        break;
+      default:
+        return;
+    }
 
     onFilterChange({
       ...filters,
-      rolesNeeded: newRoles.length > 0 ? newRoles : undefined
+      scheduledFrom: from,
+      scheduledTo: to
     });
   };
 
@@ -100,12 +141,10 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
       return CLASSIC_EXPANSIONS;
     }
 
-    // Return all expansions when no version is selected
     return [...RETAIL_EXPANSIONS, ...CLASSIC_EXPANSIONS];
   };
 
   const getRaidOptions = () => {
-    // If expansion is selected, only show raids from that expansion
     if (filters.expansion) {
       if (RETAIL_EXPANSIONS.includes(filters.expansion as any)) {
         return RETAIL_RAIDS[filters.expansion as keyof typeof RETAIL_RAIDS];
@@ -127,7 +166,6 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
       ];
     }
 
-    // Return all raids when no version is selected
     return [
       ...RETAIL_RAIDS.tww,
       ...RETAIL_RAIDS.df,
@@ -147,225 +185,264 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
       return CLASSIC_DIFFICULTIES;
     }
 
-    // Return all difficulties when no version is selected
     return [...RETAIL_DIFFICULTIES, ...CLASSIC_DIFFICULTIES];
   };
 
   return (
-    <Box sx={{ mb: 3 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Filters
-      </Typography>
-      <Grid container spacing={2} alignItems="center">
-        {/* First Row */}
-        <Grid item xs={6} sm={4} md={2.4}>
-          <FormControl fullWidth size="small">
-            <InputLabel>Game Version</InputLabel>
-            <Select
-              value={filters.gameVersion || ''}
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Filters
+        </Typography>
+
+        {/* Date/Time Filters - MOST IMPORTANT */}
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 1 }}>
+            Scheduled Time
+          </Typography>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} sm={6} md={3}>
+              <DateTimePicker
+                label="From"
+                value={filters.scheduledFrom ? new Date(filters.scheduledFrom) : null}
+                onChange={handleScheduledFromChange}
+                renderInput={(params) => (
+                  <TextField {...params} size="small" fullWidth />
+                )}
+                minDateTime={new Date()}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <DateTimePicker
+                label="To"
+                value={filters.scheduledTo ? new Date(filters.scheduledTo) : null}
+                onChange={handleScheduledToChange}
+                renderInput={(params) => (
+                  <TextField {...params} size="small" fullWidth />
+                )}
+                minDateTime={
+                  filters.scheduledFrom
+                    ? new Date(filters.scheduledFrom)
+                    : new Date()
+                }
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                <Chip
+                  label="Today"
+                  onClick={() => handleQuickFilter('today')}
+                  color="primary"
+                  variant="outlined"
+                  clickable
+                />
+                <Chip
+                  label="This Week"
+                  onClick={() => handleQuickFilter('week')}
+                  color="primary"
+                  variant="outlined"
+                  clickable
+                />
+                <Chip
+                  label="This Weekend"
+                  onClick={() => handleQuickFilter('weekend')}
+                  color="primary"
+                  variant="outlined"
+                  clickable
+                />
+                {(filters.scheduledFrom || filters.scheduledTo) && (
+                  <Chip
+                    label="Clear Dates"
+                    onClick={() =>
+                      onFilterChange({
+                        ...filters,
+                        scheduledFrom: undefined,
+                        scheduledTo: undefined
+                      })
+                    }
+                    color="error"
+                    variant="outlined"
+                    clickable
+                  />
+                )}
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+
+        <Grid container spacing={2} alignItems="center">
+          {/* First Row */}
+          <Grid item xs={6} sm={4} md={2}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Game Version</InputLabel>
+              <Select
+                value={filters.gameVersion || ''}
+                onChange={(e) =>
+                  handleGameVersionChange(e.target.value as GameVersion | '')
+                }
+                label="Game Version"
+              >
+                <MenuItem value="">All Versions</MenuItem>
+                <MenuItem value="retail">Retail</MenuItem>
+                <MenuItem value="classic">Classic</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6} sm={4} md={2}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Expansion</InputLabel>
+              <Select
+                value={filters.expansion || ''}
+                onChange={(e) =>
+                  handleExpansionChange(e.target.value as Expansion | '')
+                }
+                label="Expansion"
+              >
+                <MenuItem value="">All Expansions</MenuItem>
+                {getExpansionOptions().map((exp) => (
+                  <MenuItem key={exp} value={exp}>
+                    {EXPANSION_LABELS[exp]}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6} sm={4} md={2}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Raid</InputLabel>
+              <Select
+                value={filters.raidName || ''}
+                onChange={(e) => handleRaidNameChange(e.target.value)}
+                label="Raid"
+              >
+                <MenuItem value="">All Raids</MenuItem>
+                {getRaidOptions().map((raid) => (
+                  <MenuItem key={raid} value={raid}>
+                    {raid}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6} sm={4} md={2}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Difficulty</InputLabel>
+              <Select
+                value={filters.difficulty || ''}
+                onChange={(e) =>
+                  handleDifficultyChange(e.target.value as RaidDifficulty | '')
+                }
+                label="Difficulty"
+              >
+                <MenuItem value="">All Difficulties</MenuItem>
+                {getDifficultyOptions().map((diff) => (
+                  <MenuItem key={diff} value={diff}>
+                    {getDifficultyLabel(diff)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6} sm={4} md={2}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Faction</InputLabel>
+              <Select
+                value={filters.faction || ''}
+                onChange={(e) =>
+                  handleFactionChange(e.target.value as Faction | '')
+                }
+                label="Faction"
+              >
+                <MenuItem value="">Both Factions</MenuItem>
+                <MenuItem value="alliance">Alliance</MenuItem>
+                <MenuItem value="horde">Horde</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6} sm={4} md={2}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Saved Status</InputLabel>
+              <Select
+                value={
+                  filters.isSaved === undefined
+                    ? ''
+                    : filters.isSaved
+                    ? 'saved'
+                    : 'unsaved'
+                }
+                onChange={(e) => {
+                  const value = e.target.value;
+                  onFilterChange({
+                    ...filters,
+                    isSaved:
+                      value === ''
+                        ? undefined
+                        : value === 'saved'
+                        ? true
+                        : false
+                  });
+                }}
+                label="Saved Status"
+              >
+                <MenuItem value="">All</MenuItem>
+                <MenuItem value="saved">Saved</MenuItem>
+                <MenuItem value="unsaved">Unsaved</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          {/* Second Row */}
+          <Grid item xs={6} sm={4} md={2}>
+            <TextField
+              fullWidth
+              size="small"
+              label="Min Price"
+              type="number"
+              value={filters.minPrice || ''}
               onChange={(e) =>
-                handleGameVersionChange(e.target.value as GameVersion | '')
-              }
-              label="Game Version"
-            >
-              <MenuItem value="">All Versions</MenuItem>
-              <MenuItem value="retail">Retail</MenuItem>
-              <MenuItem value="classic">Classic</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-
-        <Grid item xs={6} sm={4} md={2.4}>
-          <FormControl fullWidth size="small">
-            <InputLabel>Expansion</InputLabel>
-            <Select
-              value={filters.expansion || ''}
-              onChange={(e) =>
-                handleExpansionChange(e.target.value as Expansion | '')
-              }
-              label="Expansion"
-            >
-              <MenuItem value="">All Expansions</MenuItem>
-              {getExpansionOptions().map((exp) => (
-                <MenuItem key={exp} value={exp}>
-                  {EXPANSION_LABELS[exp]}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-
-        <Grid item xs={6} sm={4} md={2.4}>
-          <FormControl fullWidth size="small">
-            <InputLabel>Raid</InputLabel>
-            <Select
-              value={filters.raidName || ''}
-              onChange={(e) => handleRaidNameChange(e.target.value)}
-              label="Raid"
-            >
-              <MenuItem value="">All Raids</MenuItem>
-              {getRaidOptions().map((raid) => (
-                <MenuItem key={raid} value={raid}>
-                  {raid}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-
-        <Grid item xs={6} sm={4} md={2.4}>
-          <FormControl fullWidth size="small">
-            <InputLabel>Difficulty</InputLabel>
-            <Select
-              value={filters.difficulty || ''}
-              onChange={(e) =>
-                handleDifficultyChange(e.target.value as RaidDifficulty | '')
-              }
-              label="Difficulty"
-            >
-              <MenuItem value="">All Difficulties</MenuItem>
-              {getDifficultyOptions().map((diff) => (
-                <MenuItem key={diff} value={diff}>
-                  {getDifficultyLabel(diff)}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-
-        <Grid item xs={6} sm={4} md={2.4}>
-          <FormControl fullWidth size="small">
-            <InputLabel>Saved Status</InputLabel>
-            <Select
-              value={
-                filters.isSaved === undefined
-                  ? ''
-                  : filters.isSaved
-                  ? 'saved'
-                  : 'unsaved'
-              }
-              onChange={(e) => {
-                const value = e.target.value;
                 onFilterChange({
                   ...filters,
-                  isSaved:
-                    value === ''
-                      ? undefined
-                      : value === 'saved'
-                      ? true
-                      : false
-                });
-              }}
-              label="Saved Status"
-            >
-              <MenuItem value="">All</MenuItem>
-              <MenuItem value="saved">Saved</MenuItem>
-              <MenuItem value="unsaved">Unsaved</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
+                  minPrice: e.target.value ? Number(e.target.value) : undefined
+                })
+              }
+            />
+          </Grid>
 
-        {/* Second Row */}
-        <Grid item xs={6} sm={4} md={2.4}>
-          <TextField
-            fullWidth
-            size="small"
-            label="Min Price (Gold)"
-            type="number"
-            value={filters.minPrice || ''}
-            onChange={(e) =>
-              onFilterChange({
-                ...filters,
-                minPrice: e.target.value ? Number(e.target.value) : undefined
-              })
-            }
-          />
-        </Grid>
-
-        <Grid item xs={6} sm={4} md={2.4}>
-          <TextField
-            fullWidth
-            size="small"
-            label="Max Price (Gold)"
-            type="number"
-            value={filters.maxPrice || ''}
-            onChange={(e) =>
-              onFilterChange({
-                ...filters,
-                maxPrice: e.target.value ? Number(e.target.value) : undefined
-              })
-            }
-          />
-        </Grid>
-
-        <Grid item xs={6} sm={4} md={2.4}>
-          <FormControl fullWidth size="small">
-            <InputLabel>Faction</InputLabel>
-            <Select
-              value={filters.faction || ''}
+          <Grid item xs={6} sm={4} md={2}>
+            <TextField
+              fullWidth
+              size="small"
+              label="Max Price"
+              type="number"
+              value={filters.maxPrice || ''}
               onChange={(e) =>
-                handleFactionChange(e.target.value as Faction | '')
+                onFilterChange({
+                  ...filters,
+                  maxPrice: e.target.value ? Number(e.target.value) : undefined
+                })
               }
-              label="Faction"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={4} md={2}>
+            <Button
+              variant="outlined"
+              onClick={handleResetFilters}
+              size="small"
+              fullWidth
+              color="error"
             >
-              <MenuItem value="">Both Factions</MenuItem>
-              <MenuItem value="alliance">Alliance</MenuItem>
-              <MenuItem value="horde">Horde</MenuItem>
-            </Select>
-          </FormControl>
+              Reset All
+            </Button>
+          </Grid>
         </Grid>
-
-        <Grid item xs={12} sm={6} md={3.6}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-            <Typography variant="body2" sx={{ whiteSpace: 'nowrap' }}>
-              Roles:
-            </Typography>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  size="small"
-                  checked={filters.rolesNeeded?.includes('tank') || false}
-                  onChange={() => handleRoleToggle('tank')}
-                />
-              }
-              label="Tank"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  size="small"
-                  checked={filters.rolesNeeded?.includes('healer') || false}
-                  onChange={() => handleRoleToggle('healer')}
-                />
-              }
-              label="Healer"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  size="small"
-                  checked={filters.rolesNeeded?.includes('dps') || false}
-                  onChange={() => handleRoleToggle('dps')}
-                />
-              }
-              label="DPS"
-            />
-          </Box>
-        </Grid>
-
-        <Grid item xs={6} sm={4} md={1.2}>
-          <Button
-            variant="outlined"
-            onClick={handleResetFilters}
-            size="small"
-            fullWidth
-            color="error"
-          >
-            Reset
-          </Button>
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </LocalizationProvider>
   );
 };
 
