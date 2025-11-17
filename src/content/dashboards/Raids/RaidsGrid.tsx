@@ -32,7 +32,9 @@ import {
   formatGold,
   getDifficultyLabel,
   getDifficultyColor,
-  WoWClass
+  WoWClass,
+  isFullClear,
+  getBossCountString
 } from 'src/models/raid';
 import Text from 'src/components/Text';
 import { ViewMode } from './RaidsSorting';
@@ -416,12 +418,14 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids, viewMode }) => {
                         color={getDifficultyColor(raid.difficulty)}
                         sx={{ height: 20, fontSize: '0.7rem' }}
                       />
-                      <Chip
-                        size="small"
-                        label={raid.gameVersion.toUpperCase()}
-                        variant="outlined"
-                        sx={{ height: 20, fontSize: '0.7rem' }}
-                      />
+                      {isFullClear(raid) && (
+                        <Chip
+                          size="small"
+                          label="Full Clear"
+                          color="success"
+                          sx={{ height: 20, fontSize: '0.7rem' }}
+                        />
+                      )}
                     </Box>
                   </Grid>
 
@@ -546,12 +550,14 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids, viewMode }) => {
                       color={getDifficultyColor(raid.difficulty)}
                       sx={{ height: 20, fontSize: '0.65rem' }}
                     />
-                    <Chip
-                      size="small"
-                      label={raid.gameVersion.toUpperCase()}
-                      variant="outlined"
-                      sx={{ height: 20, fontSize: '0.65rem' }}
-                    />
+                    {isFullClear(raid) && (
+                      <Chip
+                        size="small"
+                        label="Full Clear"
+                        color="success"
+                        sx={{ height: 20, fontSize: '0.65rem' }}
+                      />
+                    )}
                     {raid.isSaved && (
                       <BookmarkIcon
                         sx={{
@@ -715,6 +721,11 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids, viewMode }) => {
                       <Text color="black">Run Details:</Text>
                     </SectionTitle>
                     <StatsBox>
+                      <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                        {raid.gameVersion === 'retail' ? 'Retail' : 'Classic'}
+                      </Typography>
+                    </StatsBox>
+                    <StatsBox sx={{ mt: 0.5 }}>
                       <TagIcon
                         sx={{
                           fontSize: 16,
@@ -778,6 +789,38 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids, viewMode }) => {
                         }
                       </Typography>
                     </StatsBox>
+                  </Grid>
+
+                  {/* Boss Selection Section */}
+                  <Grid item xs={12}>
+                    <SectionTitle variant="subtitle2">
+                      <Text color="black">Bosses:</Text>
+                    </SectionTitle>
+                    {isFullClear(raid) ? (
+                      <Chip
+                        label="Full Clear (All Bosses)"
+                        color="success"
+                        size="small"
+                        sx={{ mt: 0.5 }}
+                      />
+                    ) : (
+                      <Box sx={{ mt: 0.5 }}>
+                        <Typography variant="caption" color="text.secondary" sx={{ mb: 0.5, display: 'block' }}>
+                          {getBossCountString(raid)}
+                        </Typography>
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                          {raid.selectedBosses?.map((boss) => (
+                            <Chip
+                              key={boss}
+                              label={boss}
+                              size="small"
+                              color="primary"
+                              icon={<CheckCircleIcon sx={{ fontSize: 16 }} />}
+                            />
+                          ))}
+                        </Box>
+                      </Box>
+                    )}
                   </Grid>
 
                   {/* Filling Progress Section */}

@@ -93,6 +93,7 @@ export interface RaidPost {
   payLimit: string;
   isSaved: boolean;
   description?: string;
+  selectedBosses?: string[]; // Array of boss IDs/names, empty or undefined = full clear
 
   // Expanded view fields
   credibility: RaidCredibility;
@@ -109,6 +110,8 @@ export interface RaidPost {
   note?: string;
 }
 
+export type BossFilterType = 'full' | 'partial';
+
 export interface RaidFilters {
   gameVersion?: GameVersion;
   expansion?: Expansion;
@@ -122,6 +125,7 @@ export interface RaidFilters {
   posterTiers?: PosterTier[];
   scheduledFrom?: number; // Unix timestamp
   scheduledTo?: number; // Unix timestamp
+  bossFilter?: BossFilterType; // Filter by full clear or partial clear
 }
 
 export type SortOption =
@@ -252,4 +256,268 @@ export const formatGold = (amount: number): string => {
     return `${(amount / 1000).toFixed(1)}K`;
   }
   return amount.toString();
+};
+
+// Boss data for each raid
+export const RAID_BOSSES: Record<string, string[]> = {
+  // The War Within
+  'Nerub-ar Palace': [
+    'Ulgrax the Devourer',
+    'The Bloodbound Horror',
+    'Sikran, Captain of the Sureki',
+    'Rasha\'nan',
+    'Broodtwister Ovi\'nax',
+    'Nexus-Princess Ky\'veza',
+    'The Silken Court',
+    'Queen Ansurek'
+  ],
+  'Liberation of Undermine': [
+    'Boss 1',
+    'Boss 2',
+    'Boss 3',
+    'Boss 4',
+    'Boss 5',
+    'Boss 6',
+    'Boss 7',
+    'Gallywix'
+  ],
+  'Manaforge Omega': [
+    'Boss 1',
+    'Boss 2',
+    'Boss 3',
+    'Boss 4',
+    'Boss 5',
+    'Boss 6',
+    'Boss 7',
+    'Boss 8'
+  ],
+
+  // Dragonflight
+  'Vault of the Incarnates': [
+    'Eranog',
+    'Terros',
+    'The Primal Council',
+    'Sennarth, the Cold Breath',
+    'Dathea, Ascended',
+    'Broodkeeper Diurna',
+    'Kurog Grimtotem',
+    'Raszageth the Storm-Eater'
+  ],
+  'Aberrus, the Shadowed Crucible': [
+    'Kazzara, the Hellforged',
+    'The Amalgamation Chamber',
+    'The Forgotten Experiments',
+    'Assault of the Zaqali',
+    'Rashok, the Elder',
+    'The Vigilant Steward, Zskarn',
+    'Magmorax',
+    'Echo of Neltharion',
+    'Scalecommander Sarkareth'
+  ],
+  'Amirdrassil, the Dream\'s Hope': [
+    'Gnarlroot',
+    'Igira the Cruel',
+    'Volcoross',
+    'Council of Dreams',
+    'Larodar, Keeper of the Flame',
+    'Nymue, Weaver of the Cycle',
+    'Smolderon',
+    'Tindral Sageswift, Seer of the Flame',
+    'Fyrakk the Blazing'
+  ],
+
+  // Shadowlands
+  'Sepulcher of the First Ones': [
+    'Vigilant Guardian',
+    'Skolex, the Insatiable Ravener',
+    'Artificer Xy\'mox',
+    'Dausegne, the Fallen Oracle',
+    'Prototype Pantheon',
+    'Lihuvim, Principal Architect',
+    'Halondrus the Reclaimer',
+    'Anduin Wrynn',
+    'Lords of Dread',
+    'Rygelon',
+    'The Jailer'
+  ],
+  'Sanctum of Domination': [
+    'The Tarragrue',
+    'The Eye of the Jailer',
+    'The Nine',
+    'Remnant of Ner\'zhul',
+    'Soulrender Dormazain',
+    'Painsmith Raznal',
+    'Guardian of the First Ones',
+    'Fatescribe Roh-Kalo',
+    'Kel\'Thuzad',
+    'Sylvanas Windrunner'
+  ],
+  'Castle Nathria': [
+    'Shriekwing',
+    'Huntsman Altimor',
+    'Hungering Destroyer',
+    'Artificer Xy\'mox',
+    'Sun King\'s Salvation',
+    'Lady Inerva Darkvein',
+    'The Council of Blood',
+    'Sludgefist',
+    'Stone Legion Generals',
+    'Sire Denathrius'
+  ],
+
+  // WotLK Classic
+  'Icecrown Citadel': [
+    'Lord Marrowgar',
+    'Lady Deathwhisper',
+    'Gunship Battle',
+    'Deathbringer Saurfang',
+    'Festergut',
+    'Rotface',
+    'Professor Putricide',
+    'Blood Prince Council',
+    'Blood-Queen Lana\'thel',
+    'Valithria Dreamwalker',
+    'Sindragosa',
+    'The Lich King'
+  ],
+  'Trial of the Crusader': [
+    'Northrend Beasts',
+    'Lord Jaraxxus',
+    'Faction Champions',
+    'Twin Val\'kyr',
+    'Anub\'arak'
+  ],
+  'Ulduar': [
+    'Flame Leviathan',
+    'Ignis the Furnace Master',
+    'Razorscale',
+    'XT-002 Deconstructor',
+    'Assembly of Iron',
+    'Kologarn',
+    'Auriaya',
+    'Hodir',
+    'Thorim',
+    'Freya',
+    'Mimiron',
+    'General Vezax',
+    'Yogg-Saron',
+    'Algalon the Observer'
+  ],
+  'Naxxramas': [
+    'Anub\'Rekhan',
+    'Grand Widow Faerlina',
+    'Maexxna',
+    'Noth the Plaguebringer',
+    'Heigan the Unclean',
+    'Loatheb',
+    'Instructor Razuvious',
+    'Gothik the Harvester',
+    'The Four Horsemen',
+    'Patchwerk',
+    'Grobbulus',
+    'Gluth',
+    'Thaddius',
+    'Sapphiron',
+    'Kel\'Thuzad'
+  ],
+
+  // TBC Classic
+  'Sunwell Plateau': [
+    'Kalecgos',
+    'Brutallus',
+    'Felmyst',
+    'Eredar Twins',
+    'M\'uru',
+    'Kil\'jaeden'
+  ],
+  'Black Temple': [
+    'High Warlord Naj\'entus',
+    'Supremus',
+    'Shade of Akama',
+    'Teron Gorefiend',
+    'Gurtogg Bloodboil',
+    'Reliquary of Souls',
+    'Mother Shahraz',
+    'The Illidari Council',
+    'Illidan Stormrage'
+  ],
+  'Serpentshrine Cavern': [
+    'Hydross the Unstable',
+    'The Lurker Below',
+    'Leotheras the Blind',
+    'Fathom-Lord Karathress',
+    'Morogrim Tidewalker',
+    'Lady Vashj'
+  ],
+  'Karazhan': [
+    'Attumen the Huntsman',
+    'Moroes',
+    'Maiden of Virtue',
+    'Opera Event',
+    'The Curator',
+    'Terestian Illhoof',
+    'Shade of Aran',
+    'Netherspite',
+    'Chess Event',
+    'Prince Malchezaar'
+  ],
+
+  // Vanilla Classic
+  'Temple of Ahn\'Qiraj': [
+    'The Prophet Skeram',
+    'Silithid Royalty',
+    'Battleguard Sartura',
+    'Fankriss the Unyielding',
+    'Viscidus',
+    'Princess Huhuran',
+    'Twin Emperors',
+    'Ouro',
+    'C\'Thun'
+  ],
+  'Blackwing Lair': [
+    'Razorgore the Untamed',
+    'Vaelastrasz the Corrupt',
+    'Broodlord Lashlayer',
+    'Firemaw',
+    'Ebonroc',
+    'Flamegor',
+    'Chromaggus',
+    'Nefarian'
+  ],
+  'Molten Core': [
+    'Lucifron',
+    'Magmadar',
+    'Gehennas',
+    'Garr',
+    'Shazzrah',
+    'Baron Geddon',
+    'Sulfuron Harbinger',
+    'Golemagg the Incinerator',
+    'Majordomo Executus',
+    'Ragnaros'
+  ]
+};
+
+// Helper function to get bosses for a specific raid
+export const getBossesForRaid = (raidName: string): string[] => {
+  return RAID_BOSSES[raidName] || [];
+};
+
+// Helper function to check if a raid is a full clear
+export const isFullClear = (raid: RaidPost): boolean => {
+  if (!raid.selectedBosses || raid.selectedBosses.length === 0) {
+    return true; // No bosses selected = full clear
+  }
+  const totalBosses = getBossesForRaid(raid.raidName);
+  return raid.selectedBosses.length === totalBosses.length;
+};
+
+// Helper function to get boss count string
+export const getBossCountString = (raid: RaidPost): string => {
+  if (isFullClear(raid)) {
+    return 'Full Clear';
+  }
+  const totalBosses = getBossesForRaid(raid.raidName);
+  const selectedCount = raid.selectedBosses?.length || 0;
+  return `${selectedCount}/${totalBosses.length} Bosses`;
 };

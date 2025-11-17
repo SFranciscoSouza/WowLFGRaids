@@ -35,7 +35,8 @@ import {
   RETAIL_EXPANSIONS,
   CLASSIC_EXPANSIONS,
   EXPANSION_LABELS,
-  getDifficultyLabel
+  getDifficultyLabel,
+  BossFilterType
 } from 'src/models/raid';
 
 interface RaidsFiltersProps {
@@ -422,6 +423,27 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
                 })
               }
             />
+          </Grid>
+
+          {/* Boss Filter - Full Clear or Partial Clear */}
+          <Grid item xs={6} sm={4} md={2}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Boss Clear</InputLabel>
+              <Select
+                value={filters.bossFilter || ''}
+                onChange={(e) =>
+                  onFilterChange({
+                    ...filters,
+                    bossFilter: e.target.value as BossFilterType | undefined
+                  })
+                }
+                label="Boss Clear"
+              >
+                <MenuItem value="">All</MenuItem>
+                <MenuItem value="full">Full Clear</MenuItem>
+                <MenuItem value="partial">Partial Clear</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
 
           <Grid item xs={12} sm={4} md={2}>

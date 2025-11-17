@@ -75,6 +75,19 @@ function RaidsList() {
         return false;
       }
 
+      // Boss filter - filter by full clear or partial clear
+      if (filters.bossFilter) {
+        const raidIsFullClear = !raid.selectedBosses || raid.selectedBosses.length === 0;
+
+        if (filters.bossFilter === 'full' && !raidIsFullClear) {
+          return false;
+        }
+
+        if (filters.bossFilter === 'partial' && raidIsFullClear) {
+          return false;
+        }
+      }
+
       return true;
     });
   };

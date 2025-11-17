@@ -79,7 +79,8 @@ export const mockRaidPosts: RaidPost[] = [
       healer: 'any',
       dps: 'any'
     },
-    note: 'Full clear, loot council. Whisper for more info.'
+    note: 'Full clear, loot council. Whisper for more info.',
+    selectedBosses: undefined // Full clear - all bosses
   },
   {
     id: 'raid-2',
@@ -154,7 +155,8 @@ export const mockRaidPosts: RaidPost[] = [
       healer: 'any',
       dps: ['hunter', 'mage', 'warlock', 'evoker']
     },
-    note: 'CE prog group, need ranged DPS only. Must have logs.'
+    note: 'CE prog group, need ranged DPS only. Must have logs.',
+    selectedBosses: ['The Silken Court', 'Queen Ansurek'] // Only last 2 bosses
   },
   {
     id: 'raid-3',
@@ -222,7 +224,8 @@ export const mockRaidPosts: RaidPost[] = [
       healer: 'any',
       dps: 'any'
     },
-    note: 'Chill run, alts welcome. Discord required.'
+    note: 'Chill run, alts welcome. Discord required.',
+    selectedBosses: ['Fyrakk the Blazing'] // Only final boss
   },
   {
     id: 'raid-4',
@@ -297,7 +300,8 @@ export const mockRaidPosts: RaidPost[] = [
       healer: ['paladin', 'priest', 'shaman', 'druid'],
       dps: 'any'
     },
-    note: 'LK mount reserved to guild. All other loot free roll.'
+    note: 'LK mount reserved to guild. All other loot free roll.',
+    selectedBosses: ['Sindragosa', 'The Lich King'] // Last 2 bosses
   },
   {
     id: 'raid-5',
@@ -358,6 +362,7 @@ export const mockRaidPosts: RaidPost[] = [
       dps: 'any'
     },
     note: 'New raid! Quick clear for transmog. New boosters welcome!'
+    // No selectedBosses = Full clear
   },
   {
     id: 'raid-6',
@@ -425,7 +430,8 @@ export const mockRaidPosts: RaidPost[] = [
       healer: 'any',
       dps: 'any'
     },
-    note: 'Warglaives reserved. Tier tokens open roll.'
+    note: 'Warglaives reserved. Tier tokens open roll.',
+    selectedBosses: ['Illidan Stormrage'] // Only Illidan
   },
   {
     id: 'raid-7',
@@ -501,6 +507,7 @@ export const mockRaidPosts: RaidPost[] = [
       dps: ['mage', 'warlock', 'hunter']
     },
     note: 'Top 100 guild. Guaranteed kill. Buyers get all loot.'
+    // No selectedBosses = Full clear
   },
   {
     id: 'raid-8',
