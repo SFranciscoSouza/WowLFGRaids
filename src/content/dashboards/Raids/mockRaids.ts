@@ -178,7 +178,7 @@ export const mockRaidPosts: RaidPost[] = [
     rolesNeeded: ['tank', 'healer', 'dps'],
     classesAllowed: 'all',
     postedAt: Date.now() - 2 * 60 * 60 * 1000,
-    scheduledTime: now + 1 * DAY + 20 * HOUR, // Tomorrow evening
+    scheduledTime: now + 4 * HOUR, // Tonight, 4 hours from now
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
     isSaved: true,

@@ -231,6 +231,115 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids, viewMode }) => {
     return theme.colors.success.main;
   };
 
+  const getTimeUntilRaid = (timestamp: number): string => {
+    const hoursUntil = differenceInHours(new Date(timestamp), new Date());
+    const now = new Date();
+    const raidTime = new Date(timestamp);
+
+    if (hoursUntil < 0) {
+      return 'Started';
+    }
+
+    const diffInMinutes = Math.floor((raidTime.getTime() - now.getTime()) / 60000);
+
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes}m`;
+    }
+
+    if (hoursUntil < 24) {
+      const remainingMinutes = diffInMinutes % 60;
+      return `${hoursUntil}h ${remainingMinutes}m`;
+    }
+
+    const days = Math.floor(hoursUntil / 24);
+    const remainingHours = hoursUntil % 24;
+    return `${days}d ${remainingHours}h`;
+  };
+
+  const getRaidTooltip = (raid: RaidPost) => {
+    const timeUntil = getTimeUntilRaid(raid.scheduledTime);
+    const spotsLeft = raid.maxBuyers - raid.currentBuyers;
+    const isFull = spotsLeft === 0;
+
+    return (
+      <Box>
+        {/* Time Until Raid */}
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1,
+          mb: 1,
+          pb: 1,
+          borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
+        }}>
+          <AccessTimeIcon sx={{ fontSize: 16, color: '#5569ff' }} />
+          <Box>
+            <Typography
+              variant="caption"
+              sx={{
+                display: 'block',
+                color: 'rgba(255, 255, 255, 0.7)',
+                fontSize: '0.65rem',
+                lineHeight: 1
+              }}
+            >
+              Starts in
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: 'bold',
+                color: '#fff',
+                fontSize: '0.875rem',
+                lineHeight: 1.2
+              }}
+            >
+              {timeUntil}
+            </Typography>
+          </Box>
+        </Box>
+
+        {/* Buyer Slots */}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <PersonIcon sx={{ fontSize: 16, color: isFull ? '#f44336' : '#4caf50' }} />
+          <Box sx={{ flex: 1 }}>
+            <Typography
+              variant="caption"
+              sx={{
+                display: 'block',
+                color: 'rgba(255, 255, 255, 0.7)',
+                fontSize: '0.65rem',
+                lineHeight: 1
+              }}
+            >
+              Buyer Slots
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: 'bold',
+                color: isFull ? '#f44336' : '#4caf50',
+                fontSize: '0.875rem',
+                lineHeight: 1.2
+              }}
+            >
+              {isFull ? 'FULL' : `${spotsLeft} left`}
+            </Typography>
+          </Box>
+          <Typography
+            variant="caption"
+            sx={{
+              color: 'rgba(255, 255, 255, 0.5)',
+              fontSize: '0.7rem'
+            }}
+          >
+            {raid.currentBuyers}/{raid.maxBuyers}
+          </Typography>
+        </Box>
+      </Box>
+    );
+  };
+
   return (
     <Grid container spacing={1}>
       {raids.map((raid) => (
@@ -241,7 +350,32 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids, viewMode }) => {
           md={viewMode === 'grid' ? 4 : 12}
           key={raid.id}
         >
-          <RaidCard onClick={() => handleExpandClick(raid.id)}>
+          <Tooltip
+            title={getRaidTooltip(raid)}
+            arrow
+            placement="top"
+            enterDelay={200}
+            leaveDelay={0}
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  bgcolor: 'rgba(17, 25, 54, 0.98)',
+                  border: '1px solid rgba(85, 105, 255, 0.3)',
+                  borderRadius: '8px',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+                  padding: '12px',
+                  maxWidth: 200,
+                  '& .MuiTooltip-arrow': {
+                    color: 'rgba(17, 25, 54, 0.98)',
+                    '&::before': {
+                      border: '1px solid rgba(85, 105, 255, 0.3)'
+                    }
+                  }
+                }
+              }
+            }}
+          >
+            <RaidCard onClick={() => handleExpandClick(raid.id)}>
             <Box sx={{ p: 1 }}>
               {viewMode === 'list' ? (
                 <Grid container spacing={1} alignItems="center">
@@ -742,6 +876,7 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids, viewMode }) => {
               </CardContent>
             </Collapse>
           </RaidCard>
+          </Tooltip>
         </Grid>
       ))}
     </Grid>

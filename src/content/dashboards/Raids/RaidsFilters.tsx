@@ -185,7 +185,8 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
       return CLASSIC_DIFFICULTIES;
     }
 
-    return [...RETAIL_DIFFICULTIES, ...CLASSIC_DIFFICULTIES];
+    // Return unique difficulties when no version is selected
+    return Array.from(new Set([...RETAIL_DIFFICULTIES, ...CLASSIC_DIFFICULTIES]));
   };
 
   return (
@@ -209,7 +210,6 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
                 renderInput={(params) => (
                   <TextField {...params} size="small" fullWidth />
                 )}
-                minDateTime={new Date()}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -220,11 +220,6 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
                 renderInput={(params) => (
                   <TextField {...params} size="small" fullWidth />
                 )}
-                minDateTime={
-                  filters.scheduledFrom
-                    ? new Date(filters.scheduledFrom)
-                    : new Date()
-                }
               />
             </Grid>
             <Grid item xs={12} md={6}>
