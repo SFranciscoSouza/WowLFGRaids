@@ -8,7 +8,7 @@ import {
   Pagination
 } from '@mui/material';
 import RaidsFilters from './RaidsFilters';
-import RaidsSorting from './RaidsSorting';
+import RaidsSorting, { ViewMode } from './RaidsSorting';
 import RaidsGrid from './RaidsGrid';
 import { mockRaidPosts } from './mockRaids';
 import { RaidFilters, SortOption, RaidPost } from 'src/models/raid';
@@ -19,6 +19,7 @@ function RaidsList() {
   const [filters, setFilters] = useState<RaidFilters>({});
   const [sortOption, setSortOption] = useState<SortOption>('posted_desc');
   const [currentPage, setCurrentPage] = useState(1);
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
 
   const applyFilters = (raids: RaidPost[]): RaidPost[] => {
     return raids.filter((raid) => {
@@ -124,6 +125,10 @@ function RaidsList() {
     setCurrentPage(1);
   };
 
+  const handleViewModeChange = (newMode: ViewMode) => {
+    setViewMode(newMode);
+  };
+
   return (
     <Card>
       <CardHeader
@@ -132,8 +137,7 @@ function RaidsList() {
           <Typography variant="body2" color="text.secondary">
             {filteredAndSortedRaids.length} raid
             {filteredAndSortedRaids.length !== 1 ? 's' : ''} available
-            {totalPages > 1 &&
-              ` • Page ${currentPage} of ${totalPages}`}
+            {totalPages > 1 && ` • Page ${currentPage} of ${totalPages}`}
           </Typography>
         }
       />
@@ -141,8 +145,13 @@ function RaidsList() {
       <Box sx={{ p: 3 }}>
         <RaidsFilters filters={filters} onFilterChange={handleFilterChange} />
         <Divider sx={{ my: 2 }} />
-        <RaidsSorting sortOption={sortOption} onSortChange={handleSortChange} />
-        <RaidsGrid raids={paginatedRaids} />
+        <RaidsSorting
+          sortOption={sortOption}
+          onSortChange={handleSortChange}
+          viewMode={viewMode}
+          onViewModeChange={handleViewModeChange}
+        />
+        <RaidsGrid raids={paginatedRaids} viewMode={viewMode} />
         {totalPages > 1 && (
           <Box
             sx={{

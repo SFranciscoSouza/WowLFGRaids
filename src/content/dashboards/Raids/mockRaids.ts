@@ -16,7 +16,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/1.jpg',
       credit: 150.5,
       karma: 245,
-      isOnline: true
+      isOnline: true,
+      tier: 'normal'
     },
     signups: 13,
     rolesNeeded: ['tank', 'healer', 'dps'],
@@ -89,7 +90,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/2.jpg',
       credit: 320.0,
       karma: 890,
-      isOnline: true
+      isOnline: true,
+      tier: 'premium'
     },
     signups: 18,
     rolesNeeded: ['dps'],
@@ -162,7 +164,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/3.jpg',
       credit: 45.0,
       karma: 120,
-      isOnline: false
+      isOnline: false,
+      tier: 'low_cut'
     },
     signups: 5,
     rolesNeeded: ['tank', 'healer', 'dps'],
@@ -218,7 +221,7 @@ export const mockRaidPosts: RaidPost[] = [
     gameVersion: 'classic',
     expansion: 'wotlk',
     raidName: 'Icecrown Citadel',
-    difficulty: '25h',
+    difficulty: 'heroic',
     price: 1200000,
     faction: 'alliance',
     server: 'grobbulus',
@@ -228,7 +231,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/4.jpg',
       credit: 89.5,
       karma: 340,
-      isOnline: true
+      isOnline: true,
+      tier: 'premium'
     },
     signups: 22,
     rolesNeeded: ['healer', 'dps'],
@@ -301,7 +305,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/5.jpg',
       credit: 12.0,
       karma: 45,
-      isOnline: true
+      isOnline: true,
+      tier: 'low_cut'
     },
     signups: 2,
     rolesNeeded: ['tank', 'healer', 'dps'],
@@ -349,7 +354,7 @@ export const mockRaidPosts: RaidPost[] = [
     gameVersion: 'classic',
     expansion: 'tbc',
     raidName: 'Black Temple',
-    difficulty: '25n',
+    difficulty: 'normal',
     price: 800000,
     faction: 'horde',
     server: 'faerlina',
@@ -359,7 +364,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/1.jpg',
       credit: 200.0,
       karma: 567,
-      isOnline: false
+      isOnline: false,
+      tier: 'premium'
     },
     signups: 15,
     rolesNeeded: ['tank', 'dps'],
@@ -425,7 +431,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/2.jpg',
       credit: 1250.0,
       karma: 2100,
-      isOnline: true
+      isOnline: true,
+      tier: 'premium'
     },
     signups: 19,
     rolesNeeded: ['dps'],
@@ -498,7 +505,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/3.jpg',
       credit: 78.0,
       karma: 189,
-      isOnline: true
+      isOnline: true,
+      tier: 'normal'
     },
     signups: 9,
     rolesNeeded: ['tank', 'healer', 'dps'],
@@ -554,7 +562,7 @@ export const mockRaidPosts: RaidPost[] = [
     gameVersion: 'classic',
     expansion: 'wotlk',
     raidName: 'Ulduar',
-    difficulty: '10h',
+    difficulty: 'heroic',
     price: 500000,
     faction: 'alliance',
     server: 'benediction',
@@ -564,7 +572,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/4.jpg',
       credit: 95.0,
       karma: 412,
-      isOnline: false
+      isOnline: false,
+      tier: 'normal'
     },
     signups: 7,
     rolesNeeded: ['healer', 'dps'],
@@ -637,7 +646,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/5.jpg',
       credit: 22.5,
       karma: 78,
-      isOnline: true
+      isOnline: true,
+      tier: 'low_cut'
     },
     signups: 4,
     rolesNeeded: ['tank', 'healer', 'dps'],
@@ -710,7 +720,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/1.jpg',
       credit: 185.0,
       karma: 623,
-      isOnline: true
+      isOnline: true,
+      tier: 'premium'
     },
     signups: 16,
     rolesNeeded: ['healer', 'dps'],
@@ -766,7 +777,7 @@ export const mockRaidPosts: RaidPost[] = [
     gameVersion: 'classic',
     expansion: 'vanilla',
     raidName: 'Molten Core',
-    difficulty: 'flex',
+    difficulty: 'normal',
     price: 250000,
     faction: 'alliance',
     server: 'whitemane',
@@ -776,7 +787,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/2.jpg',
       credit: 55.0,
       karma: 198,
-      isOnline: false
+      isOnline: false,
+      tier: 'normal'
     },
     signups: 28,
     rolesNeeded: ['tank', 'healer', 'dps'],
@@ -842,7 +854,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/3.jpg',
       credit: 445.0,
       karma: 1245,
-      isOnline: true
+      isOnline: true,
+      tier: 'premium'
     },
     signups: 17,
     rolesNeeded: ['dps'],
@@ -898,7 +911,7 @@ export const mockRaidPosts: RaidPost[] = [
     gameVersion: 'classic',
     expansion: 'tbc',
     raidName: 'Karazhan',
-    difficulty: '10n',
+    difficulty: 'normal',
     price: 180000,
     faction: 'horde',
     server: 'mankrik',
@@ -908,7 +921,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/4.jpg',
       credit: 38.0,
       karma: 134,
-      isOnline: true
+      isOnline: true,
+      tier: 'low_cut'
     },
     signups: 6,
     rolesNeeded: ['tank', 'healer', 'dps'],
@@ -974,7 +988,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/5.jpg',
       credit: 112.0,
       karma: 387,
-      isOnline: false
+      isOnline: false,
+      tier: 'normal'
     },
     signups: 11,
     rolesNeeded: ['tank', 'dps'],
@@ -1040,7 +1055,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/1.jpg',
       credit: 67.0,
       karma: 256,
-      isOnline: true
+      isOnline: true,
+      tier: 'normal'
     },
     signups: 8,
     rolesNeeded: ['healer', 'dps'],
@@ -1096,7 +1112,7 @@ export const mockRaidPosts: RaidPost[] = [
     gameVersion: 'classic',
     expansion: 'wotlk',
     raidName: 'Trial of the Crusader',
-    difficulty: '25n',
+    difficulty: 'normal',
     price: 650000,
     faction: 'horde',
     server: 'sulfuras',
@@ -1106,7 +1122,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/2.jpg',
       credit: 82.0,
       karma: 298,
-      isOnline: true
+      isOnline: true,
+      tier: 'normal'
     },
     signups: 19,
     rolesNeeded: ['tank', 'healer', 'dps'],
@@ -1172,7 +1189,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/3.jpg',
       credit: 43.0,
       karma: 167,
-      isOnline: false
+      isOnline: false,
+      tier: 'low_cut'
     },
     signups: 7,
     rolesNeeded: ['tank', 'healer', 'dps'],
@@ -1228,7 +1246,7 @@ export const mockRaidPosts: RaidPost[] = [
     gameVersion: 'classic',
     expansion: 'vanilla',
     raidName: 'Blackwing Lair',
-    difficulty: 'flex',
+    difficulty: 'heroic',
     price: 320000,
     faction: 'alliance',
     server: 'pagle',
@@ -1238,7 +1256,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/4.jpg',
       credit: 71.0,
       karma: 245,
-      isOnline: true
+      isOnline: true,
+      tier: 'normal'
     },
     signups: 24,
     rolesNeeded: ['healer', 'dps'],
@@ -1311,7 +1330,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/5.jpg',
       credit: 890.0,
       karma: 1876,
-      isOnline: true
+      isOnline: true,
+      tier: 'premium'
     },
     signups: 18,
     rolesNeeded: ['dps'],
@@ -1377,7 +1397,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/1.jpg',
       credit: 28.0,
       karma: 89,
-      isOnline: true
+      isOnline: true,
+      tier: 'low_cut'
     },
     signups: 3,
     rolesNeeded: ['tank', 'healer', 'dps'],
@@ -1433,7 +1454,7 @@ export const mockRaidPosts: RaidPost[] = [
     gameVersion: 'classic',
     expansion: 'tbc',
     raidName: 'Sunwell Plateau',
-    difficulty: '25h',
+    difficulty: 'mythic',
     price: 1500000,
     faction: 'alliance',
     server: 'faerlina',
@@ -1443,7 +1464,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/2.jpg',
       credit: 156.0,
       karma: 534,
-      isOnline: false
+      isOnline: false,
+      tier: 'premium'
     },
     signups: 21,
     rolesNeeded: ['tank', 'dps'],
@@ -1509,7 +1531,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/3.jpg',
       credit: 52.0,
       karma: 178,
-      isOnline: true
+      isOnline: true,
+      tier: 'normal'
     },
     signups: 10,
     rolesNeeded: ['tank', 'healer', 'dps'],
@@ -1575,7 +1598,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/4.jpg',
       credit: 678.0,
       karma: 1567,
-      isOnline: true
+      isOnline: true,
+      tier: 'premium'
     },
     signups: 19,
     rolesNeeded: ['dps'],
@@ -1631,7 +1655,7 @@ export const mockRaidPosts: RaidPost[] = [
     gameVersion: 'classic',
     expansion: 'wotlk',
     raidName: 'Naxxramas',
-    difficulty: '10n',
+    difficulty: 'normal',
     price: 220000,
     faction: 'horde',
     server: 'grobbulus',
@@ -1641,7 +1665,8 @@ export const mockRaidPosts: RaidPost[] = [
       avatar: '/static/images/avatars/5.jpg',
       credit: 31.0,
       karma: 112,
-      isOnline: false
+      isOnline: false,
+      tier: 'low_cut'
     },
     signups: 5,
     rolesNeeded: ['tank', 'healer', 'dps'],

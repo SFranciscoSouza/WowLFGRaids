@@ -40,17 +40,20 @@ import {
   WoWClass
 } from 'src/models/raid';
 import Text from 'src/components/Text';
+import { ViewMode } from './RaidsSorting';
 
 interface RaidsGridProps {
   raids: RaidPost[];
+  viewMode: ViewMode;
 }
 
 const RaidCard = styled(Card)(
   ({ theme }) => `
-    margin-bottom: ${theme.spacing(2)};
+    margin-bottom: ${theme.spacing(1.5)};
     background: ${theme.colors.alpha.black[5]};
     transition: transform 0.2s ease-in-out;
     cursor: pointer;
+    position: relative;
 
     &:hover {
       transform: translateY(-2px);
@@ -131,7 +134,7 @@ const formatClassName = (className: WoWClass): string => {
     .join(' ');
 };
 
-const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
+const RaidsGrid: FC<RaidsGridProps> = ({ raids, viewMode }) => {
   const theme = useTheme();
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>(
     {}
@@ -246,9 +249,15 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
   };
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={1.5}>
       {raids.map((raid) => (
-        <Grid item xs={12} key={raid.id}>
+        <Grid
+          item
+          xs={12}
+          sm={viewMode === 'grid' ? 6 : 12}
+          md={viewMode === 'grid' ? 4 : 12}
+          key={raid.id}
+        >
           <Tooltip
             title={getFillingProgressSummary(raid)}
             arrow
@@ -257,249 +266,459 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
             leaveDelay={0}
           >
             <RaidCard onClick={() => handleExpandClick(raid.id)}>
-              <Box sx={{ p: 2 }}>
-                <Grid container spacing={2} alignItems="stretch">
-                {/* Poster Avatar */}
-                <Grid item xs="auto">
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      height: '100%',
-                      alignItems: 'center'
-                    }}
-                  >
-                    <Badge
-                      overlap="circular"
-                      anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right'
-                      }}
-                      variant="dot"
-                      color={raid.poster.isOnline ? 'success' : 'error'}
-                    >
-                      <PosterAvatar
-                        src={raid.poster.avatar}
-                        alt={raid.poster.name}
-                      />
-                    </Badge>
-                  </Box>
-                </Grid>
-
-                {/* Main Card Content */}
-                <Grid item xs>
-                  <Box sx={{ p: 1 }}>
-                    <Grid container spacing={2}>
-                      {/* Raid Info */}
-                      <Grid item xs={12} sm={6} md={4}>
-                        <Box>
-                          <Typography variant="h4">
-                            <Text color="info">{raid.raidName}</Text>
-                          </Typography>
-                          <Box sx={{ mt: 1 }}>
-                            <Chip
-                              size="small"
-                              label={getDifficultyLabel(raid.difficulty)}
-                              color={getDifficultyColor(raid.difficulty)}
-                            />
-                            <Chip
-                              size="small"
-                              label={raid.gameVersion.toUpperCase()}
-                              variant="outlined"
-                              sx={{ ml: 1 }}
-                            />
-                          </Box>
-                          <Box sx={{ mt: 1 }}>
-                            <Typography variant="body2" color="text.secondary">
-                              <Text color="warning">
-                                {raid.avgPayTime} Avg Pay
-                              </Text>
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              <Text color="secondary">
-                                {raid.payLimit} Pay Limit
-                              </Text>
-                            </Typography>
-                          </Box>
-                          <Box sx={{ mt: 1 }}>
-                            <Chip
-                              size="small"
-                              icon={
-                                raid.isSaved ? (
-                                  <BookmarkIcon sx={{ fontSize: 16 }} />
-                                ) : (
-                                  <BookmarkBorderIcon sx={{ fontSize: 16 }} />
-                                )
-                              }
-                              label={raid.isSaved ? 'Saved' : 'Unsaved'}
-                              color={raid.isSaved ? 'default' : 'success'}
-                              variant={raid.isSaved ? 'outlined' : 'filled'}
-                            />
-                          </Box>
-                        </Box>
-                      </Grid>
-
-                      {/* Price and Time */}
-                      <Grid item xs={12} sm={6} md={3}>
-                        <Box>
-                          <StatsBox>
-                            <GoldIconImage
-                              src="/static/images/icons/Gold.svg"
-                              alt="Gold"
-                            />
-                            <Typography
-                              variant="h3"
-                              sx={{ color: theme.colors.warning.main }}
-                            >
-                              {formatGold(raid.price)}
-                            </Typography>
-                          </StatsBox>
-                          <Typography
-                            variant="subtitle2"
-                            sx={{ mt: 1, color: theme.colors.warning.main }}
-                          >
-                            Posted {formatTimeAgo(raid.postedAt)}
-                          </Typography>
-                        </Box>
-                      </Grid>
-
-                      {/* Faction and Server */}
-                      <Grid item xs={12} sm={6} md={2.5}>
-                        <Box>
-                          <StatsBox>
-                            <FactionIconImage
-                              src={`/static/images/icons/${
-                                raid.faction === 'horde' ? 'Horde' : 'Alliance'
-                              }.svg`}
-                              alt={raid.faction}
-                            />
-                            <Typography
-                              variant="h5"
-                              sx={{
-                                color:
-                                  raid.faction === 'horde'
-                                    ? theme.colors.error.main
-                                    : theme.colors.info.main,
-                                textTransform: 'capitalize'
-                              }}
-                            >
-                              {raid.server}
-                            </Typography>
-                          </StatsBox>
-                          <Box sx={{ mt: 1 }}>
-                            <StatsBox>
-                              <Typography variant="body2">
-                                {raid.poster.credit.toFixed(2)} Credit
-                              </Typography>
-                              <HelpIcon
-                                sx={{ fontSize: 14 }}
-                                color="primary"
-                              />
-                            </StatsBox>
-                            <StatsBox>
-                              <Typography variant="body2">
-                                {raid.poster.karma} Karma
-                              </Typography>
-                              <HelpIcon
-                                sx={{ fontSize: 14 }}
-                                color="primary"
-                              />
-                            </StatsBox>
-                          </Box>
-                        </Box>
-                      </Grid>
-
-                      {/* Roles and Signups */}
-                      <Grid item xs={12} sm={6} md={2.5}>
-                        <Box>
-                          <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                            LF:
-                          </Typography>
-                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            {raid.rolesNeeded.includes('tank') && (
-                              <RoleIconImage
-                                src="/static/images/icons/Tank.svg"
-                                alt="Tank"
-                              />
-                            )}
-                            {raid.rolesNeeded.includes('healer') && (
-                              <RoleIconImage
-                                src="/static/images/icons/Healer.svg"
-                                alt="Healer"
-                              />
-                            )}
-                            {raid.rolesNeeded.includes('dps') && (
-                              <RoleIconImage
-                                src="/static/images/icons/DPS.svg"
-                                alt="DPS"
-                              />
-                            )}
-                          </Box>
-                          <Typography
-                            variant="subtitle2"
-                            sx={{ mt: 1, color: theme.colors.warning.main }}
-                          >
-                            {raid.signups} Signups
-                          </Typography>
-                        </Box>
-                      </Grid>
+              <Box sx={{ p: 1.5 }}>
+                {viewMode === 'list' ? (
+                  <Grid container spacing={1.5} alignItems="stretch">
+                    {/* Poster Avatar */}
+                    <Grid item xs="auto">
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          height: '100%',
+                          alignItems: 'center'
+                        }}
+                      >
+                        <Badge
+                          overlap="circular"
+                          anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right'
+                          }}
+                          variant="dot"
+                          color={raid.poster.isOnline ? 'success' : 'error'}
+                        >
+                          <PosterAvatar
+                            src={raid.poster.avatar}
+                            alt={raid.poster.name}
+                          />
+                        </Badge>
+                      </Box>
                     </Grid>
-                  </Box>
-                </Grid>
 
-                {/* Signup Buttons - Always Visible */}
-                <Grid item xs="auto">
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 0.5,
-                      height: '100%',
-                      justifyContent: 'center'
-                    }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      sx={{ minWidth: 140, fontSize: '0.75rem' }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        console.log('Signup as Booster for raid:', raid.id);
+                    {/* Main Card Content */}
+                    <Grid item xs>
+                      <Box sx={{ p: 0.5 }}>
+                        <Grid container spacing={1.5}>
+                          {/* Raid Info */}
+                          <Grid item xs={12} sm={6} md={4}>
+                            <Box>
+                              <Typography variant="h4">
+                                <Text color="info">{raid.raidName}</Text>
+                              </Typography>
+                              <Box
+                                sx={{
+                                  mt: 1,
+                                  display: 'flex',
+                                  flexWrap: 'wrap',
+                                  gap: 0.5
+                                }}
+                              >
+                                <Chip
+                                  size="small"
+                                  label={getDifficultyLabel(raid.difficulty)}
+                                  color={getDifficultyColor(raid.difficulty)}
+                                />
+                                <Chip
+                                  size="small"
+                                  label={raid.gameVersion.toUpperCase()}
+                                  variant="outlined"
+                                />
+                                <Chip
+                                  size="small"
+                                  icon={
+                                    raid.isSaved ? (
+                                      <BookmarkIcon sx={{ fontSize: 16 }} />
+                                    ) : (
+                                      <BookmarkBorderIcon
+                                        sx={{ fontSize: 16 }}
+                                      />
+                                    )
+                                  }
+                                  label={raid.isSaved ? 'Saved' : 'Unsaved'}
+                                  color={raid.isSaved ? 'default' : 'success'}
+                                  variant={raid.isSaved ? 'outlined' : 'filled'}
+                                />
+                              </Box>
+                              <Box sx={{ mt: 1 }}>
+                                <Typography
+                                  variant="body2"
+                                  color="text.secondary"
+                                >
+                                  <Text color="warning">
+                                    {raid.avgPayTime} Avg Pay
+                                  </Text>
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  color="text.secondary"
+                                >
+                                  <Text color="secondary">
+                                    {raid.payLimit} Pay Limit
+                                  </Text>
+                                </Typography>
+                              </Box>
+                            </Box>
+                          </Grid>
+
+                          {/* Price and Time */}
+                          <Grid item xs={12} sm={6} md={3}>
+                            <Box>
+                              <StatsBox>
+                                <GoldIconImage
+                                  src="/static/images/icons/Gold.svg"
+                                  alt="Gold"
+                                />
+                                <Typography
+                                  variant="h3"
+                                  sx={{ color: theme.colors.warning.main }}
+                                >
+                                  {formatGold(raid.price)}
+                                </Typography>
+                              </StatsBox>
+                              <Typography
+                                variant="subtitle2"
+                                sx={{
+                                  mt: 1,
+                                  color: theme.colors.warning.main
+                                }}
+                              >
+                                Posted {formatTimeAgo(raid.postedAt)}
+                              </Typography>
+                            </Box>
+                          </Grid>
+
+                          {/* Faction and Server */}
+                          <Grid item xs={12} sm={6} md={2.5}>
+                            <Box>
+                              <StatsBox>
+                                <FactionIconImage
+                                  src={`/static/images/icons/${
+                                    raid.faction === 'horde'
+                                      ? 'Horde'
+                                      : 'Alliance'
+                                  }.svg`}
+                                  alt={raid.faction}
+                                />
+                                <Typography
+                                  variant="h5"
+                                  sx={{
+                                    color:
+                                      raid.faction === 'horde'
+                                        ? theme.colors.error.main
+                                        : theme.colors.info.main,
+                                    textTransform: 'capitalize'
+                                  }}
+                                >
+                                  {raid.server}
+                                </Typography>
+                              </StatsBox>
+                              <Box sx={{ mt: 1 }}>
+                                <StatsBox>
+                                  <Typography variant="body2">
+                                    {raid.poster.credit.toFixed(2)} Credit
+                                  </Typography>
+                                  <HelpIcon
+                                    sx={{ fontSize: 14 }}
+                                    color="primary"
+                                  />
+                                </StatsBox>
+                                <StatsBox>
+                                  <Typography variant="body2">
+                                    {raid.poster.karma} Karma
+                                  </Typography>
+                                  <HelpIcon
+                                    sx={{ fontSize: 14 }}
+                                    color="primary"
+                                  />
+                                </StatsBox>
+                              </Box>
+                            </Box>
+                          </Grid>
+
+                          {/* Roles and Signups */}
+                          <Grid item xs={12} sm={6} md={2.5}>
+                            <Box>
+                              <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
+                                LF:
+                              </Typography>
+                              <Box
+                                sx={{ display: 'flex', alignItems: 'center' }}
+                              >
+                                {raid.rolesNeeded.includes('tank') && (
+                                  <RoleIconImage
+                                    src="/static/images/icons/Tank.svg"
+                                    alt="Tank"
+                                  />
+                                )}
+                                {raid.rolesNeeded.includes('healer') && (
+                                  <RoleIconImage
+                                    src="/static/images/icons/Healer.svg"
+                                    alt="Healer"
+                                  />
+                                )}
+                                {raid.rolesNeeded.includes('dps') && (
+                                  <RoleIconImage
+                                    src="/static/images/icons/DPS.svg"
+                                    alt="DPS"
+                                  />
+                                )}
+                              </Box>
+                              <Typography
+                                variant="subtitle2"
+                                sx={{
+                                  mt: 1,
+                                  color: theme.colors.warning.main
+                                }}
+                              >
+                                {raid.signups} Signups
+                              </Typography>
+                            </Box>
+                          </Grid>
+                        </Grid>
+                      </Box>
+                    </Grid>
+
+                    {/* Signup Buttons - Always Visible */}
+                    <Grid item xs="auto">
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 0.5,
+                          height: '100%',
+                          justifyContent: 'center'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          size="small"
+                          sx={{ minWidth: 140, fontSize: '0.75rem' }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log(
+                              'Signup as Booster for raid:',
+                              raid.id
+                            );
+                          }}
+                        >
+                          Booster Signup
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          size="small"
+                          sx={{ minWidth: 140, fontSize: '0.75rem' }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log(
+                              'Signup as Boosted for raid:',
+                              raid.id
+                            );
+                          }}
+                        >
+                          Boosted Signup
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          color="info"
+                          size="small"
+                          startIcon={<MessageIcon sx={{ fontSize: 14 }} />}
+                          sx={{ minWidth: 140, fontSize: '0.75rem' }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log('Message poster:', raid.poster.id);
+                          }}
+                        >
+                          Message
+                        </Button>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                ) : (
+                  /* Grid View - Compact Card Layout */
+                  <Box>
+                    {/* Header with Avatar and Name */}
+                    <Box
+                      sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}
+                    >
+                      <Badge
+                        overlap="circular"
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'right'
+                        }}
+                        variant="dot"
+                        color={raid.poster.isOnline ? 'success' : 'error'}
+                      >
+                        <Avatar
+                          src={raid.poster.avatar}
+                          alt={raid.poster.name}
+                          sx={{ width: 40, height: 40 }}
+                        />
+                      </Badge>
+                      <Box sx={{ ml: 1, flex: 1 }}>
+                        <Typography variant="h5" noWrap>
+                          <Text color="info">{raid.raidName}</Text>
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {raid.poster.name}
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    {/* Chips */}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: 0.5,
+                        mb: 1.5
                       }}
                     >
-                      Booster Signup
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="small"
-                      sx={{ minWidth: 140, fontSize: '0.75rem' }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        console.log('Signup as Boosted for raid:', raid.id);
-                      }}
+                      <Chip
+                        size="small"
+                        label={getDifficultyLabel(raid.difficulty)}
+                        color={getDifficultyColor(raid.difficulty)}
+                      />
+                      <Chip
+                        size="small"
+                        label={raid.gameVersion.toUpperCase()}
+                        variant="outlined"
+                      />
+                      <Chip
+                        size="small"
+                        icon={
+                          raid.isSaved ? (
+                            <BookmarkIcon sx={{ fontSize: 14 }} />
+                          ) : (
+                            <BookmarkBorderIcon sx={{ fontSize: 14 }} />
+                          )
+                        }
+                        label={raid.isSaved ? 'Saved' : 'Unsaved'}
+                        color={raid.isSaved ? 'default' : 'success'}
+                        variant={raid.isSaved ? 'outlined' : 'filled'}
+                      />
+                    </Box>
+
+                    {/* Price */}
+                    <StatsBox sx={{ mb: 1 }}>
+                      <GoldIconImage
+                        src="/static/images/icons/Gold.svg"
+                        alt="Gold"
+                      />
+                      <Typography
+                        variant="h4"
+                        sx={{ color: theme.colors.warning.main }}
+                      >
+                        {formatGold(raid.price)}
+                      </Typography>
+                    </StatsBox>
+
+                    {/* Server and Faction */}
+                    <StatsBox sx={{ mb: 1 }}>
+                      <FactionIconImage
+                        src={`/static/images/icons/${
+                          raid.faction === 'horde' ? 'Horde' : 'Alliance'
+                        }.svg`}
+                        alt={raid.faction}
+                      />
+                      <Typography variant="body2">{raid.server}</Typography>
+                    </StatsBox>
+
+                    {/* Roles */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                      <Typography
+                        variant="caption"
+                        sx={{ mr: 0.5, color: 'text.secondary' }}
+                      >
+                        LF:
+                      </Typography>
+                      {raid.rolesNeeded.includes('tank') && (
+                        <RoleIconImage
+                          src="/static/images/icons/Tank.svg"
+                          alt="Tank"
+                          style={{ width: 20, height: 20 }}
+                        />
+                      )}
+                      {raid.rolesNeeded.includes('healer') && (
+                        <RoleIconImage
+                          src="/static/images/icons/Healer.svg"
+                          alt="Healer"
+                          style={{ width: 20, height: 20 }}
+                        />
+                      )}
+                      {raid.rolesNeeded.includes('dps') && (
+                        <RoleIconImage
+                          src="/static/images/icons/DPS.svg"
+                          alt="DPS"
+                          style={{ width: 20, height: 20 }}
+                        />
+                      )}
+                      <Typography
+                        variant="caption"
+                        sx={{ ml: 1, color: theme.colors.warning.main }}
+                      >
+                        {raid.signups} signups
+                      </Typography>
+                    </Box>
+
+                    {/* Posted Time */}
+                    <Typography variant="caption" color="text.secondary">
+                      Posted {formatTimeAgo(raid.postedAt)}
+                    </Typography>
+
+                    {/* Action Buttons */}
+                    <Box
+                      sx={{ mt: 1.5 }}
+                      onClick={(e) => e.stopPropagation()}
                     >
-                      Boosted Signup
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="info"
-                      size="small"
-                      startIcon={<MessageIcon sx={{ fontSize: 14 }} />}
-                      sx={{ minWidth: 140, fontSize: '0.75rem' }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        console.log('Message poster:', raid.poster.id);
-                      }}
-                    >
-                      Message
-                    </Button>
+                      <Box sx={{ display: 'flex', gap: 0.5, mb: 0.5 }}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          size="small"
+                          sx={{ flex: 1, fontSize: '0.7rem' }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log('Signup as Booster for raid:', raid.id);
+                          }}
+                        >
+                          Booster
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          size="small"
+                          sx={{ flex: 1, fontSize: '0.7rem' }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log('Signup as Boosted for raid:', raid.id);
+                          }}
+                        >
+                          Boosted
+                        </Button>
+                      </Box>
+                      <Button
+                        variant="outlined"
+                        color="info"
+                        size="small"
+                        fullWidth
+                        startIcon={<MessageIcon sx={{ fontSize: 12 }} />}
+                        sx={{ fontSize: '0.7rem' }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          console.log('Message poster:', raid.poster.id);
+                        }}
+                      >
+                        Message
+                      </Button>
+                    </Box>
                   </Box>
-                </Grid>
-              </Grid>
-            </Box>
+                )}
+              </Box>
 
             {/* Expanded Content */}
             <Collapse

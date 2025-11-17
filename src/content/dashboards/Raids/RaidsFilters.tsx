@@ -157,7 +157,8 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
         Filters
       </Typography>
       <Grid container spacing={2} alignItems="center">
-        <Grid item xs={6} sm={4} md={2}>
+        {/* First Row */}
+        <Grid item xs={6} sm={4} md={2.4}>
           <FormControl fullWidth size="small">
             <InputLabel>Game Version</InputLabel>
             <Select
@@ -174,7 +175,7 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={6} sm={4} md={2}>
+        <Grid item xs={6} sm={4} md={2.4}>
           <FormControl fullWidth size="small">
             <InputLabel>Expansion</InputLabel>
             <Select
@@ -194,7 +195,7 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid item xs={6} sm={4} md={2.4}>
           <FormControl fullWidth size="small">
             <InputLabel>Raid</InputLabel>
             <Select
@@ -212,7 +213,7 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={6} sm={4} md={2}>
+        <Grid item xs={6} sm={4} md={2.4}>
           <FormControl fullWidth size="small">
             <InputLabel>Difficulty</InputLabel>
             <Select
@@ -232,7 +233,72 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid item xs={6} sm={4} md={2.4}>
+          <FormControl fullWidth size="small">
+            <InputLabel>Saved Status</InputLabel>
+            <Select
+              value={
+                filters.isSaved === undefined
+                  ? ''
+                  : filters.isSaved
+                  ? 'saved'
+                  : 'unsaved'
+              }
+              onChange={(e) => {
+                const value = e.target.value;
+                onFilterChange({
+                  ...filters,
+                  isSaved:
+                    value === ''
+                      ? undefined
+                      : value === 'saved'
+                      ? true
+                      : false
+                });
+              }}
+              label="Saved Status"
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="saved">Saved</MenuItem>
+              <MenuItem value="unsaved">Unsaved</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+
+        {/* Second Row */}
+        <Grid item xs={6} sm={4} md={2.4}>
+          <TextField
+            fullWidth
+            size="small"
+            label="Min Price (Gold)"
+            type="number"
+            value={filters.minPrice || ''}
+            onChange={(e) =>
+              onFilterChange({
+                ...filters,
+                minPrice: e.target.value ? Number(e.target.value) : undefined
+              })
+            }
+          />
+        </Grid>
+
+        <Grid item xs={6} sm={4} md={2.4}>
+          <TextField
+            fullWidth
+            size="small"
+            label="Max Price (Gold)"
+            type="number"
+            value={filters.maxPrice || ''}
+            onChange={(e) =>
+              onFilterChange({
+                ...filters,
+                maxPrice: e.target.value ? Number(e.target.value) : undefined
+              })
+            }
+          />
+        </Grid>
+
+        <Grid item xs={6} sm={4} md={2.4}>
           <FormControl fullWidth size="small">
             <InputLabel>Faction</InputLabel>
             <Select
@@ -249,42 +315,10 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={6} sm={4} md={2}>
-          <TextField
-            fullWidth
-            size="small"
-            label="Min Price (Gold)"
-            type="number"
-            value={filters.minPrice || ''}
-            onChange={(e) =>
-              onFilterChange({
-                ...filters,
-                minPrice: e.target.value ? Number(e.target.value) : undefined
-              })
-            }
-          />
-        </Grid>
-
-        <Grid item xs={6} sm={4} md={2}>
-          <TextField
-            fullWidth
-            size="small"
-            label="Max Price (Gold)"
-            type="number"
-            value={filters.maxPrice || ''}
-            onChange={(e) =>
-              onFilterChange({
-                ...filters,
-                maxPrice: e.target.value ? Number(e.target.value) : undefined
-              })
-            }
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Grid item xs={12} sm={6} md={3.6}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             <Typography variant="body2" sx={{ whiteSpace: 'nowrap' }}>
-              Roles Needed:
+              Roles:
             </Typography>
             <FormControlLabel
               control={
@@ -319,41 +353,15 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           </Box>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={2}>
-          <FormControl fullWidth size="small">
-            <InputLabel>Saved Status</InputLabel>
-            <Select
-              value={
-                filters.isSaved === undefined
-                  ? ''
-                  : filters.isSaved
-                  ? 'saved'
-                  : 'unsaved'
-              }
-              onChange={(e) => {
-                const value = e.target.value;
-                onFilterChange({
-                  ...filters,
-                  isSaved:
-                    value === ''
-                      ? undefined
-                      : value === 'saved'
-                      ? true
-                      : false
-                });
-              }}
-              label="Saved Status"
-            >
-              <MenuItem value="">All</MenuItem>
-              <MenuItem value="saved">Saved</MenuItem>
-              <MenuItem value="unsaved">Unsaved</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={2}>
-          <Button variant="outlined" onClick={handleResetFilters} size="small">
-            Reset Filters
+        <Grid item xs={6} sm={4} md={1.2}>
+          <Button
+            variant="outlined"
+            onClick={handleResetFilters}
+            size="small"
+            fullWidth
+            color="error"
+          >
+            Reset
           </Button>
         </Grid>
       </Grid>

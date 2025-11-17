@@ -1,14 +1,8 @@
 export type GameVersion = 'retail' | 'classic';
 
-export type RaidDifficulty =
-  | 'normal'
-  | 'heroic'
-  | 'mythic'
-  | '10n'
-  | '10h'
-  | '25n'
-  | '25h'
-  | 'flex';
+export type RaidDifficulty = 'normal' | 'heroic' | 'mythic';
+
+export type PosterTier = 'premium' | 'normal' | 'low_cut';
 
 export type Faction = 'alliance' | 'horde';
 
@@ -36,6 +30,7 @@ export interface RaidPoster {
   credit: number;
   karma: number;
   isOnline: boolean;
+  tier: PosterTier;
 }
 
 export type RiskLevel = 'low' | 'medium' | 'high';
@@ -123,6 +118,7 @@ export interface RaidFilters {
   maxPrice?: number;
   rolesNeeded?: Role[];
   isSaved?: boolean;
+  posterTiers?: PosterTier[];
 }
 
 export type SortOption =
@@ -183,23 +179,16 @@ export const RETAIL_DIFFICULTIES: RaidDifficulty[] = [
 ];
 
 export const CLASSIC_DIFFICULTIES: RaidDifficulty[] = [
-  '10n',
-  '10h',
-  '25n',
-  '25h',
-  'flex'
+  'normal',
+  'heroic',
+  'mythic'
 ];
 
 export const getDifficultyLabel = (difficulty: RaidDifficulty): string => {
   const labels: Record<RaidDifficulty, string> = {
     normal: 'Normal',
     heroic: 'Heroic',
-    mythic: 'Mythic',
-    '10n': '10-Man Normal',
-    '10h': '10-Man Heroic',
-    '25n': '25-Man Normal',
-    '25h': '25-Man Heroic',
-    flex: 'Flexible'
+    mythic: 'Mythic'
   };
   return labels[difficulty];
 };
@@ -213,14 +202,41 @@ export const getDifficultyColor = (
   > = {
     normal: 'success',
     heroic: 'warning',
-    mythic: 'error',
-    '10n': 'success',
-    '10h': 'warning',
-    '25n': 'info',
-    '25h': 'error',
-    flex: 'secondary'
+    mythic: 'error'
   };
   return colors[difficulty];
+};
+
+export const getPosterTierLabel = (tier: PosterTier): string => {
+  const labels: Record<PosterTier, string> = {
+    premium: 'Premium',
+    normal: 'Normal',
+    low_cut: 'Low Cut'
+  };
+  return labels[tier];
+};
+
+export const getPosterTierColor = (
+  tier: PosterTier
+): 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' => {
+  const colors: Record<
+    PosterTier,
+    'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success'
+  > = {
+    premium: 'warning',
+    normal: 'primary',
+    low_cut: 'info'
+  };
+  return colors[tier];
+};
+
+export const getPosterTierPriority = (tier: PosterTier): number => {
+  const priorities: Record<PosterTier, number> = {
+    premium: 0,
+    normal: 1,
+    low_cut: 2
+  };
+  return priorities[tier];
 };
 
 export const formatGold = (amount: number): string => {
