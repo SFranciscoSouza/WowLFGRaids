@@ -223,6 +223,17 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
+                  to="/dashboards/raids"
+                  startIcon={<EmojiEventsTwoToneIcon />}
+                >
+                  Raids
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
                   to="/dashboards/messenger"
                   startIcon={<MmsTwoToneIcon />}
                 >

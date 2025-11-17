@@ -21,6 +21,7 @@ const Overview = Loader(lazy(() => import('src/content/overview')));
 // Dashboards
 
 const Tasks = Loader(lazy(() => import('src/content/dashboards/Tasks')));
+const Raids = Loader(lazy(() => import('src/content/dashboards/Raids')));
 
 // Applications
 
@@ -131,6 +132,10 @@ const routes: RouteObject[] = [
       {
         path: 'tasks',
         element: <Tasks />
+      },
+      {
+        path: 'raids',
+        element: <Raids />
       },
       {
         path: 'messenger',
