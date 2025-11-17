@@ -204,7 +204,7 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
     return { text: 'At Market Average', color: theme.colors.info.main };
   };
 
-  const getFillingProgressSummary = (raid: RaidPost): string => {
+  const getFillingProgressSummary = (raid: RaidPost) => {
     const totalCurrent = raid.roleSlots.reduce(
       (sum, slot) => sum + slot.current,
       0
@@ -212,14 +212,37 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
     const totalMax = raid.roleSlots.reduce((sum, slot) => sum + slot.max, 0);
     const percentage = Math.round((totalCurrent / totalMax) * 100);
 
-    const roleDetails = raid.roleSlots
-      .map(
-        (slot) =>
-          `${slot.role.charAt(0).toUpperCase() + slot.role.slice(1)}: ${slot.current}/${slot.max}`
-      )
-      .join(' | ');
-
-    return `Filling: ${totalCurrent}/${totalMax} (${percentage}%)\n${roleDetails}`;
+    return (
+      <Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mb: 1 }}>
+          <img
+            src="/static/images/icons/LFG.svg"
+            alt="LFG"
+            style={{ width: 20, height: 20 }}
+          />
+          <Typography variant="body2">
+            {totalCurrent}/{totalMax} ({percentage}%)
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          {raid.roleSlots.map((slot) => (
+            <Box
+              key={slot.role}
+              sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+            >
+              <img
+                src={`/static/images/icons/${slot.role.charAt(0).toUpperCase() + slot.role.slice(1)}.svg`}
+                alt={slot.role}
+                style={{ width: 20, height: 20 }}
+              />
+              <Typography variant="body2">
+                {slot.current}/{slot.max}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+    );
   };
 
   return (
@@ -227,14 +250,11 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
       {raids.map((raid) => (
         <Grid item xs={12} key={raid.id}>
           <Tooltip
-            title={
-              <Box sx={{ whiteSpace: 'pre-line' }}>
-                {getFillingProgressSummary(raid)}
-              </Box>
-            }
+            title={getFillingProgressSummary(raid)}
             arrow
             placement="top"
-            followCursor
+            enterDelay={300}
+            leaveDelay={0}
           >
             <RaidCard onClick={() => handleExpandClick(raid.id)}>
               <Box sx={{ p: 2 }}>
