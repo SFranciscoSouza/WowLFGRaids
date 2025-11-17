@@ -95,6 +95,7 @@ export interface RaidPost {
   postedAt: number;
   avgPayTime: string;
   payLimit: string;
+  isSaved: boolean;
   description?: string;
 
   // Expanded view fields
@@ -121,6 +122,7 @@ export interface RaidFilters {
   minPrice?: number;
   maxPrice?: number;
   rolesNeeded?: Role[];
+  isSaved?: boolean;
 }
 
 export type SortOption =

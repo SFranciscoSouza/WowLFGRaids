@@ -24,6 +24,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 59 * 60 * 1000,
     avgPayTime: '3 Hours',
     payLimit: '30 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 169,
       averageRating: 9.93,
@@ -96,6 +97,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 25 * 60 * 1000,
     avgPayTime: '4 Hours',
     payLimit: '45 Minutes',
+    isSaved: false,
     credibility: {
       totalReviews: 342,
       averageRating: 9.98,
@@ -168,6 +170,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 2 * 60 * 60 * 1000,
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 45,
       averageRating: 8.5,
@@ -233,6 +236,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 15 * 60 * 1000,
     avgPayTime: '3 Hours',
     payLimit: '30 Minutes',
+    isSaved: false,
     credibility: {
       totalReviews: 128,
       averageRating: 9.45,
@@ -305,6 +309,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 3 * 60 * 60 * 1000,
     avgPayTime: '1 Hour',
     payLimit: '15 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 15,
       averageRating: 7.2,
@@ -362,6 +367,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 45 * 60 * 1000,
     avgPayTime: '2.5 Hours',
     payLimit: '25 Minutes',
+    isSaved: false,
     credibility: {
       totalReviews: 89,
       averageRating: 9.12,
@@ -427,6 +433,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 10 * 60 * 1000,
     avgPayTime: '5 Hours',
     payLimit: '60 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 512,
       averageRating: 9.99,
@@ -499,6 +506,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 90 * 60 * 1000,
     avgPayTime: '3 Hours',
     payLimit: '30 Minutes',
+    isSaved: false,
     credibility: {
       totalReviews: 67,
       averageRating: 8.89,
@@ -564,6 +572,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 4 * 60 * 60 * 1000,
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 156,
       averageRating: 9.67,
@@ -636,6 +645,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 5 * 60 * 60 * 1000,
     avgPayTime: '2.5 Hours',
     payLimit: '25 Minutes',
+    isSaved: false,
     credibility: {
       totalReviews: 28,
       averageRating: 7.85,
@@ -708,6 +718,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 32 * 60 * 1000,
     avgPayTime: '3.5 Hours',
     payLimit: '35 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 234,
       averageRating: 9.78,
@@ -773,6 +784,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 6 * 60 * 60 * 1000,
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
+    isSaved: false,
     credibility: {
       totalReviews: 76,
       averageRating: 8.92,
@@ -838,6 +850,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 20 * 60 * 1000,
     avgPayTime: '4 Hours',
     payLimit: '45 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 289,
       averageRating: 9.91,
@@ -903,6 +916,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 85 * 60 * 1000,
     avgPayTime: '1.5 Hours',
     payLimit: '15 Minutes',
+    isSaved: false,
     credibility: {
       totalReviews: 52,
       averageRating: 8.45,
@@ -968,6 +982,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 3.5 * 60 * 60 * 1000,
     avgPayTime: '2.5 Hours',
     payLimit: '25 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 145,
       averageRating: 9.34,
@@ -1033,6 +1048,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 55 * 60 * 1000,
     avgPayTime: '2.5 Hours',
     payLimit: '25 Minutes',
+    isSaved: false,
     credibility: {
       totalReviews: 98,
       averageRating: 9.21,
@@ -1098,6 +1114,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 42 * 60 * 1000,
     avgPayTime: '1.5 Hours',
     payLimit: '20 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 112,
       averageRating: 9.15,
@@ -1163,6 +1180,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 2.5 * 60 * 60 * 1000,
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
+    isSaved: false,
     credibility: {
       totalReviews: 61,
       averageRating: 8.67,
@@ -1228,6 +1246,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 72 * 60 * 1000,
     avgPayTime: '2.5 Hours',
     payLimit: '25 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 94,
       averageRating: 9.08,
@@ -1300,6 +1319,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 12 * 60 * 1000,
     avgPayTime: '4.5 Hours',
     payLimit: '50 Minutes',
+    isSaved: false,
     credibility: {
       totalReviews: 423,
       averageRating: 9.96,
@@ -1365,6 +1385,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 4.5 * 60 * 60 * 1000,
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 34,
       averageRating: 7.95,
@@ -1430,6 +1451,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 38 * 60 * 1000,
     avgPayTime: '3 Hours',
     payLimit: '30 Minutes',
+    isSaved: false,
     credibility: {
       totalReviews: 178,
       averageRating: 9.52,
@@ -1495,6 +1517,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 95 * 60 * 1000,
     avgPayTime: '2 Hours',
     payLimit: '20 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 72,
       averageRating: 8.78,
@@ -1560,6 +1583,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 18 * 60 * 1000,
     avgPayTime: '4 Hours',
     payLimit: '45 Minutes',
+    isSaved: false,
     credibility: {
       totalReviews: 367,
       averageRating: 9.94,
@@ -1625,6 +1649,7 @@ export const mockRaidPosts: RaidPost[] = [
     postedAt: Date.now() - 5.5 * 60 * 60 * 1000,
     avgPayTime: '1.5 Hours',
     payLimit: '15 Minutes',
+    isSaved: true,
     credibility: {
       totalReviews: 41,
       averageRating: 8.23,

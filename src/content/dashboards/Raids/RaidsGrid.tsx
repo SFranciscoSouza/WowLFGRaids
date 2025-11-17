@@ -30,6 +30,8 @@ import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
 import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 import HelpIcon from '@mui/icons-material/Help';
 import MessageIcon from '@mui/icons-material/Message';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import {
   RaidPost,
   formatGold,
@@ -202,13 +204,41 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
     return { text: 'At Market Average', color: theme.colors.info.main };
   };
 
+  const getFillingProgressSummary = (raid: RaidPost): string => {
+    const totalCurrent = raid.roleSlots.reduce(
+      (sum, slot) => sum + slot.current,
+      0
+    );
+    const totalMax = raid.roleSlots.reduce((sum, slot) => sum + slot.max, 0);
+    const percentage = Math.round((totalCurrent / totalMax) * 100);
+
+    const roleDetails = raid.roleSlots
+      .map(
+        (slot) =>
+          `${slot.role.charAt(0).toUpperCase() + slot.role.slice(1)}: ${slot.current}/${slot.max}`
+      )
+      .join(' | ');
+
+    return `Filling: ${totalCurrent}/${totalMax} (${percentage}%)\n${roleDetails}`;
+  };
+
   return (
     <Grid container spacing={2}>
       {raids.map((raid) => (
         <Grid item xs={12} key={raid.id}>
-          <RaidCard onClick={() => handleExpandClick(raid.id)}>
-            <Box sx={{ p: 2 }}>
-              <Grid container spacing={2} alignItems="stretch">
+          <Tooltip
+            title={
+              <Box sx={{ whiteSpace: 'pre-line' }}>
+                {getFillingProgressSummary(raid)}
+              </Box>
+            }
+            arrow
+            placement="top"
+            followCursor
+          >
+            <RaidCard onClick={() => handleExpandClick(raid.id)}>
+              <Box sx={{ p: 2 }}>
+                <Grid container spacing={2} alignItems="stretch">
                 {/* Poster Avatar */}
                 <Grid item xs="auto">
                   <Box
@@ -270,6 +300,21 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
                                 {raid.payLimit} Pay Limit
                               </Text>
                             </Typography>
+                          </Box>
+                          <Box sx={{ mt: 1 }}>
+                            <Chip
+                              size="small"
+                              icon={
+                                raid.isSaved ? (
+                                  <BookmarkIcon sx={{ fontSize: 16 }} />
+                                ) : (
+                                  <BookmarkBorderIcon sx={{ fontSize: 16 }} />
+                                )
+                              }
+                              label={raid.isSaved ? 'Saved' : 'Unsaved'}
+                              color={raid.isSaved ? 'default' : 'success'}
+                              variant={raid.isSaved ? 'outlined' : 'filled'}
+                            />
                           </Box>
                         </Box>
                       </Grid>
@@ -799,6 +844,7 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
               </CardContent>
             </Collapse>
           </RaidCard>
+          </Tooltip>
         </Grid>
       ))}
     </Grid>

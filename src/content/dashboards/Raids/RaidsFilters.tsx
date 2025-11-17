@@ -281,7 +281,7 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           />
         </Grid>
 
-        <Grid item xs={12} sm={6} md={6}>
+        <Grid item xs={12} sm={6} md={4}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Typography variant="body2" sx={{ whiteSpace: 'nowrap' }}>
               Roles Needed:
@@ -317,6 +317,38 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
               label="DPS"
             />
           </Box>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={2}>
+          <FormControl fullWidth size="small">
+            <InputLabel>Saved Status</InputLabel>
+            <Select
+              value={
+                filters.isSaved === undefined
+                  ? ''
+                  : filters.isSaved
+                  ? 'saved'
+                  : 'unsaved'
+              }
+              onChange={(e) => {
+                const value = e.target.value;
+                onFilterChange({
+                  ...filters,
+                  isSaved:
+                    value === ''
+                      ? undefined
+                      : value === 'saved'
+                      ? true
+                      : false
+                });
+              }}
+              label="Saved Status"
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="saved">Saved</MenuItem>
+              <MenuItem value="unsaved">Unsaved</MenuItem>
+            </Select>
+          </FormControl>
         </Grid>
 
         <Grid item xs={12} sm={6} md={2}>

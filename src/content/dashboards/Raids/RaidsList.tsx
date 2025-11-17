@@ -59,6 +59,10 @@ function RaidsList() {
         }
       }
 
+      if (filters.isSaved !== undefined && raid.isSaved !== filters.isSaved) {
+        return false;
+      }
+
       return true;
     });
   };
