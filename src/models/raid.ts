@@ -4,7 +4,6 @@ export type RaidDifficulty =
   | 'normal'
   | 'heroic'
   | 'mythic'
-  | 'lfr'
   | '10n'
   | '10h'
   | '25n'
@@ -39,9 +38,51 @@ export interface RaidPoster {
   isOnline: boolean;
 }
 
+export type RiskLevel = 'low' | 'medium' | 'high';
+
+export interface RaidCredibility {
+  totalReviews: number;
+  averageRating: number;
+  karmaChange: number;
+  riskLevel: RiskLevel;
+}
+
+export interface RaidRequirements {
+  minIOScore?: number;
+  minIlvl?: number;
+  minRating?: number;
+  minKarma?: number;
+}
+
+export interface RoleSlot {
+  role: Role;
+  current: number;
+  max: number;
+}
+
+export interface GroupMember {
+  id: string;
+  name: string;
+  class: WoWClass;
+  role: Role;
+  avatar?: string;
+}
+
+export interface BuyerInfo {
+  willParticipate: boolean;
+  count: number;
+}
+
+export interface EligibleClasses {
+  tank: WoWClass[] | 'any';
+  healer: WoWClass[] | 'any';
+  dps: WoWClass[] | 'any';
+}
+
 export interface RaidPost {
   id: string;
   gameVersion: GameVersion;
+  expansion: Expansion;
   raidName: string;
   difficulty: RaidDifficulty;
   price: number;
@@ -55,10 +96,25 @@ export interface RaidPost {
   avgPayTime: string;
   payLimit: string;
   description?: string;
+
+  // Expanded view fields
+  credibility: RaidCredibility;
+  numberOfRuns: number;
+  isTimed: boolean;
+  maxBuyers: number;
+  currentBuyers: number;
+  marketAveragePrice: number;
+  requirements: RaidRequirements;
+  roleSlots: RoleSlot[];
+  groupMembers: GroupMember[];
+  buyerInfo: BuyerInfo;
+  eligibleClasses: EligibleClasses;
+  note?: string;
 }
 
 export interface RaidFilters {
   gameVersion?: GameVersion;
+  expansion?: Expansion;
   raidName?: string;
   difficulty?: RaidDifficulty;
   faction?: Faction;
@@ -75,9 +131,22 @@ export type SortOption =
   | 'signups_desc'
   | 'karma_desc';
 
+export type RetailExpansion = 'tww' | 'df' | 'sl';
+export type ClassicExpansion = 'wotlk' | 'tbc' | 'vanilla';
+export type Expansion = RetailExpansion | ClassicExpansion;
+
+export const EXPANSION_LABELS: Record<Expansion, string> = {
+  tww: 'The War Within',
+  df: 'Dragonflight',
+  sl: 'Shadowlands',
+  wotlk: 'Wrath of the Lich King',
+  tbc: 'The Burning Crusade',
+  vanilla: 'Classic Vanilla'
+};
+
 // Configuration for raid options
-export const RETAIL_RAIDS = {
-  tww: ['Nerub-ar Palace', 'Liberation of Undermine'],
+export const RETAIL_RAIDS: Record<RetailExpansion, string[]> = {
+  tww: ['Manaforge Omega', 'Liberation of Undermine', 'Nerub-ar Palace'],
   df: [
     'Amirdrassil, the Dream\'s Hope',
     'Aberrus, the Shadowed Crucible',
@@ -90,7 +159,7 @@ export const RETAIL_RAIDS = {
   ]
 };
 
-export const CLASSIC_RAIDS = {
+export const CLASSIC_RAIDS: Record<ClassicExpansion, string[]> = {
   wotlk: [
     'Icecrown Citadel',
     'Trial of the Crusader',
@@ -101,8 +170,11 @@ export const CLASSIC_RAIDS = {
   vanilla: ['Naxxramas', 'Temple of Ahn\'Qiraj', 'Blackwing Lair', 'Molten Core']
 };
 
+export const RETAIL_EXPANSIONS: RetailExpansion[] = ['tww', 'df', 'sl'];
+
+export const CLASSIC_EXPANSIONS: ClassicExpansion[] = ['wotlk', 'tbc', 'vanilla'];
+
 export const RETAIL_DIFFICULTIES: RaidDifficulty[] = [
-  'lfr',
   'normal',
   'heroic',
   'mythic'
@@ -118,7 +190,6 @@ export const CLASSIC_DIFFICULTIES: RaidDifficulty[] = [
 
 export const getDifficultyLabel = (difficulty: RaidDifficulty): string => {
   const labels: Record<RaidDifficulty, string> = {
-    lfr: 'Looking for Raid',
     normal: 'Normal',
     heroic: 'Heroic',
     mythic: 'Mythic',
@@ -138,7 +209,6 @@ export const getDifficultyColor = (
     RaidDifficulty,
     'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success'
   > = {
-    lfr: 'info',
     normal: 'success',
     heroic: 'warning',
     mythic: 'error',

@@ -18,10 +18,14 @@ import {
   RaidDifficulty,
   Faction,
   Role,
+  Expansion,
   RETAIL_RAIDS,
   CLASSIC_RAIDS,
   RETAIL_DIFFICULTIES,
   CLASSIC_DIFFICULTIES,
+  RETAIL_EXPANSIONS,
+  CLASSIC_EXPANSIONS,
+  EXPANSION_LABELS,
   getDifficultyLabel
 } from 'src/models/raid';
 
@@ -38,8 +42,15 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
     onFilterChange({
       ...filters,
       gameVersion: version || undefined,
-      raidName: undefined,
-      difficulty: undefined
+      expansion: undefined
+    });
+  };
+
+  const handleExpansionChange = (expansion: Expansion | '') => {
+    onFilterChange({
+      ...filters,
+      expansion: expansion || undefined,
+      raidName: undefined
     });
   };
 
@@ -80,18 +91,47 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
     onFilterChange({});
   };
 
+  const getExpansionOptions = (): Expansion[] => {
+    if (filters.gameVersion === 'retail') {
+      return RETAIL_EXPANSIONS;
+    }
+
+    if (filters.gameVersion === 'classic') {
+      return CLASSIC_EXPANSIONS;
+    }
+
+    // Return all expansions when no version is selected
+    return [...RETAIL_EXPANSIONS, ...CLASSIC_EXPANSIONS];
+  };
+
   const getRaidOptions = () => {
-    if (!filters.gameVersion) return [];
+    // If expansion is selected, only show raids from that expansion
+    if (filters.expansion) {
+      if (RETAIL_EXPANSIONS.includes(filters.expansion as any)) {
+        return RETAIL_RAIDS[filters.expansion as keyof typeof RETAIL_RAIDS];
+      }
+      if (CLASSIC_EXPANSIONS.includes(filters.expansion as any)) {
+        return CLASSIC_RAIDS[filters.expansion as keyof typeof CLASSIC_RAIDS];
+      }
+    }
 
     if (filters.gameVersion === 'retail') {
+      return [...RETAIL_RAIDS.tww, ...RETAIL_RAIDS.df, ...RETAIL_RAIDS.sl];
+    }
+
+    if (filters.gameVersion === 'classic') {
       return [
-        ...RETAIL_RAIDS.tww,
-        ...RETAIL_RAIDS.df,
-        ...RETAIL_RAIDS.sl
+        ...CLASSIC_RAIDS.wotlk,
+        ...CLASSIC_RAIDS.tbc,
+        ...CLASSIC_RAIDS.vanilla
       ];
     }
 
+    // Return all raids when no version is selected
     return [
+      ...RETAIL_RAIDS.tww,
+      ...RETAIL_RAIDS.df,
+      ...RETAIL_RAIDS.sl,
       ...CLASSIC_RAIDS.wotlk,
       ...CLASSIC_RAIDS.tbc,
       ...CLASSIC_RAIDS.vanilla
@@ -99,11 +139,16 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
   };
 
   const getDifficultyOptions = () => {
-    if (!filters.gameVersion) return [];
+    if (filters.gameVersion === 'retail') {
+      return RETAIL_DIFFICULTIES;
+    }
 
-    return filters.gameVersion === 'retail'
-      ? RETAIL_DIFFICULTIES
-      : CLASSIC_DIFFICULTIES;
+    if (filters.gameVersion === 'classic') {
+      return CLASSIC_DIFFICULTIES;
+    }
+
+    // Return all difficulties when no version is selected
+    return [...RETAIL_DIFFICULTIES, ...CLASSIC_DIFFICULTIES];
   };
 
   return (
@@ -111,8 +156,8 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
       <Typography variant="h6" sx={{ mb: 2 }}>
         Filters
       </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={3}>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={6} sm={4} md={2}>
           <FormControl fullWidth size="small">
             <InputLabel>Game Version</InputLabel>
             <Select
@@ -129,8 +174,28 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={3}>
-          <FormControl fullWidth size="small" disabled={!filters.gameVersion}>
+        <Grid item xs={6} sm={4} md={2}>
+          <FormControl fullWidth size="small">
+            <InputLabel>Expansion</InputLabel>
+            <Select
+              value={filters.expansion || ''}
+              onChange={(e) =>
+                handleExpansionChange(e.target.value as Expansion | '')
+              }
+              label="Expansion"
+            >
+              <MenuItem value="">All Expansions</MenuItem>
+              {getExpansionOptions().map((exp) => (
+                <MenuItem key={exp} value={exp}>
+                  {EXPANSION_LABELS[exp]}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={6} sm={4} md={3}>
+          <FormControl fullWidth size="small">
             <InputLabel>Raid</InputLabel>
             <Select
               value={filters.raidName || ''}
@@ -147,8 +212,8 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={3}>
-          <FormControl fullWidth size="small" disabled={!filters.gameVersion}>
+        <Grid item xs={6} sm={4} md={2}>
+          <FormControl fullWidth size="small">
             <InputLabel>Difficulty</InputLabel>
             <Select
               value={filters.difficulty || ''}
@@ -167,7 +232,7 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={6} sm={4} md={3}>
           <FormControl fullWidth size="small">
             <InputLabel>Faction</InputLabel>
             <Select
@@ -184,7 +249,7 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item xs={6} sm={4} md={2}>
           <TextField
             fullWidth
             size="small"
@@ -200,7 +265,7 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           />
         </Grid>
 
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item xs={6} sm={4} md={2}>
           <TextField
             fullWidth
             size="small"
@@ -216,47 +281,45 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
           />
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
-          <Box>
-            <Typography variant="body2" sx={{ mb: 0.5 }}>
+        <Grid item xs={12} sm={6} md={6}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Typography variant="body2" sx={{ whiteSpace: 'nowrap' }}>
               Roles Needed:
             </Typography>
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    size="small"
-                    checked={filters.rolesNeeded?.includes('tank') || false}
-                    onChange={() => handleRoleToggle('tank')}
-                  />
-                }
-                label="Tank"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    size="small"
-                    checked={filters.rolesNeeded?.includes('healer') || false}
-                    onChange={() => handleRoleToggle('healer')}
-                  />
-                }
-                label="Healer"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    size="small"
-                    checked={filters.rolesNeeded?.includes('dps') || false}
-                    onChange={() => handleRoleToggle('dps')}
-                  />
-                }
-                label="DPS"
-              />
-            </Box>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  size="small"
+                  checked={filters.rolesNeeded?.includes('tank') || false}
+                  onChange={() => handleRoleToggle('tank')}
+                />
+              }
+              label="Tank"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  size="small"
+                  checked={filters.rolesNeeded?.includes('healer') || false}
+                  onChange={() => handleRoleToggle('healer')}
+                />
+              }
+              label="Healer"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  size="small"
+                  checked={filters.rolesNeeded?.includes('dps') || false}
+                  onChange={() => handleRoleToggle('dps')}
+                />
+              }
+              label="DPS"
+            />
           </Box>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item xs={12} sm={6} md={2}>
           <Button variant="outlined" onClick={handleResetFilters} size="small">
             Reset Filters
           </Button>

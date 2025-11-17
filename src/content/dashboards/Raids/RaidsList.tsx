@@ -16,6 +16,10 @@ function RaidsList() {
         return false;
       }
 
+      if (filters.expansion && raid.expansion !== filters.expansion) {
+        return false;
+      }
+
       if (filters.raidName && raid.raidName !== filters.raidName) {
         return false;
       }
