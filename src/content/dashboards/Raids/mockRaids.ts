@@ -684,5 +684,987 @@ export const mockRaidPosts: RaidPost[] = [
       dps: 'any'
     },
     note: 'Transmog run. All appearances available. Fast clears.'
+  },
+  {
+    id: 'raid-11',
+    gameVersion: 'retail',
+    expansion: 'tww',
+    raidName: 'Nerub-ar Palace',
+    difficulty: 'heroic',
+    price: 3200000,
+    faction: 'horde',
+    server: 'thrall',
+    poster: {
+      id: 'user-11',
+      name: 'Webspinner',
+      avatar: '/static/images/avatars/1.jpg',
+      credit: 185.0,
+      karma: 623,
+      isOnline: true
+    },
+    signups: 16,
+    rolesNeeded: ['healer', 'dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 32 * 60 * 1000,
+    avgPayTime: '3.5 Hours',
+    payLimit: '35 Minutes',
+    credibility: {
+      totalReviews: 234,
+      averageRating: 9.78,
+      karmaChange: 98.2,
+      riskLevel: 'low'
+    },
+    numberOfRuns: 1,
+    isTimed: false,
+    maxBuyers: 6,
+    currentBuyers: 4,
+    marketAveragePrice: 3000000,
+    requirements: {
+      minIOScore: 3400,
+      minIlvl: 641,
+      minRating: 3,
+      minKarma: 25
+    },
+    roleSlots: [
+      { role: 'tank', current: 2, max: 2 },
+      { role: 'healer', current: 3, max: 4 },
+      { role: 'dps', current: 11, max: 14 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-16',
+        name: 'Darkguard',
+        class: 'death_knight',
+        role: 'tank',
+        avatar: '/static/images/avatars/3.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: true,
+      count: 4
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: 'any'
+    },
+    note: 'Aiming for full clear. AOTC included.'
+  },
+  {
+    id: 'raid-12',
+    gameVersion: 'classic',
+    expansion: 'vanilla',
+    raidName: 'Molten Core',
+    difficulty: 'flex',
+    price: 250000,
+    faction: 'alliance',
+    server: 'whitemane',
+    poster: {
+      id: 'user-12',
+      name: 'Ragnarosbane',
+      avatar: '/static/images/avatars/2.jpg',
+      credit: 55.0,
+      karma: 198,
+      isOnline: false
+    },
+    signups: 28,
+    rolesNeeded: ['tank', 'healer', 'dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 6 * 60 * 60 * 1000,
+    avgPayTime: '2 Hours',
+    payLimit: '20 Minutes',
+    credibility: {
+      totalReviews: 76,
+      averageRating: 8.92,
+      karmaChange: 28.7,
+      riskLevel: 'low'
+    },
+    numberOfRuns: 1,
+    isTimed: false,
+    maxBuyers: 20,
+    currentBuyers: 15,
+    marketAveragePrice: 280000,
+    requirements: {
+      minIOScore: 0,
+      minIlvl: 60,
+      minRating: 0,
+      minKarma: -50
+    },
+    roleSlots: [
+      { role: 'tank', current: 1, max: 2 },
+      { role: 'healer', current: 8, max: 10 },
+      { role: 'dps', current: 25, max: 28 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-17',
+        name: 'Fireward',
+        class: 'warrior',
+        role: 'tank',
+        avatar: '/static/images/avatars/4.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: false,
+      count: 15
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: 'any'
+    },
+    note: 'Classic nostalgia run. Thunderfury binding reserved.'
+  },
+  {
+    id: 'raid-13',
+    gameVersion: 'retail',
+    expansion: 'df',
+    raidName: 'Vault of the Incarnates',
+    difficulty: 'mythic',
+    price: 5500000,
+    faction: 'alliance',
+    server: 'proudmoore',
+    poster: {
+      id: 'user-13',
+      name: 'Primalforce',
+      avatar: '/static/images/avatars/3.jpg',
+      credit: 445.0,
+      karma: 1245,
+      isOnline: true
+    },
+    signups: 17,
+    rolesNeeded: ['dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 20 * 60 * 1000,
+    avgPayTime: '4 Hours',
+    payLimit: '45 Minutes',
+    credibility: {
+      totalReviews: 289,
+      averageRating: 9.91,
+      karmaChange: 142.6,
+      riskLevel: 'low'
+    },
+    numberOfRuns: 1,
+    isTimed: true,
+    maxBuyers: 2,
+    currentBuyers: 1,
+    marketAveragePrice: 5200000,
+    requirements: {
+      minIOScore: 3600,
+      minIlvl: 643,
+      minRating: 6,
+      minKarma: 75
+    },
+    roleSlots: [
+      { role: 'tank', current: 2, max: 2 },
+      { role: 'healer', current: 4, max: 4 },
+      { role: 'dps', current: 13, max: 14 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-18',
+        name: 'Stormcaller',
+        class: 'shaman',
+        role: 'healer',
+        avatar: '/static/images/avatars/5.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: true,
+      count: 1
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: ['evoker', 'mage', 'warlock']
+    },
+    note: 'Old content for mounts. Guaranteed Raszageth mount drop.'
+  },
+  {
+    id: 'raid-14',
+    gameVersion: 'classic',
+    expansion: 'tbc',
+    raidName: 'Karazhan',
+    difficulty: '10n',
+    price: 180000,
+    faction: 'horde',
+    server: 'mankrik',
+    poster: {
+      id: 'user-14',
+      name: 'Medivhson',
+      avatar: '/static/images/avatars/4.jpg',
+      credit: 38.0,
+      karma: 134,
+      isOnline: true
+    },
+    signups: 6,
+    rolesNeeded: ['tank', 'healer', 'dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 85 * 60 * 1000,
+    avgPayTime: '1.5 Hours',
+    payLimit: '15 Minutes',
+    credibility: {
+      totalReviews: 52,
+      averageRating: 8.45,
+      karmaChange: 19.8,
+      riskLevel: 'medium'
+    },
+    numberOfRuns: 2,
+    isTimed: false,
+    maxBuyers: 4,
+    currentBuyers: 2,
+    marketAveragePrice: 200000,
+    requirements: {
+      minIOScore: 0,
+      minIlvl: 115,
+      minRating: 0,
+      minKarma: 0
+    },
+    roleSlots: [
+      { role: 'tank', current: 1, max: 2 },
+      { role: 'healer', current: 1, max: 2 },
+      { role: 'dps', current: 4, max: 6 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-19',
+        name: 'Chessmaster',
+        class: 'mage',
+        role: 'dps',
+        avatar: '/static/images/avatars/1.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: false,
+      count: 2
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: 'any'
+    },
+    note: 'Quick Kara clear. Nightbane summon included.'
+  },
+  {
+    id: 'raid-15',
+    gameVersion: 'retail',
+    expansion: 'sl',
+    raidName: 'Castle Nathria',
+    difficulty: 'heroic',
+    price: 950000,
+    faction: 'alliance',
+    server: 'sargeras',
+    poster: {
+      id: 'user-15',
+      name: 'Venthyrlord',
+      avatar: '/static/images/avatars/5.jpg',
+      credit: 112.0,
+      karma: 387,
+      isOnline: false
+    },
+    signups: 11,
+    rolesNeeded: ['tank', 'dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 3.5 * 60 * 60 * 1000,
+    avgPayTime: '2.5 Hours',
+    payLimit: '25 Minutes',
+    credibility: {
+      totalReviews: 145,
+      averageRating: 9.34,
+      karmaChange: 56.9,
+      riskLevel: 'low'
+    },
+    numberOfRuns: 1,
+    isTimed: false,
+    maxBuyers: 10,
+    currentBuyers: 6,
+    marketAveragePrice: 1000000,
+    requirements: {
+      minIOScore: 2600,
+      minIlvl: 622,
+      minRating: 0,
+      minKarma: -10
+    },
+    roleSlots: [
+      { role: 'tank', current: 1, max: 2 },
+      { role: 'healer', current: 4, max: 4 },
+      { role: 'dps', current: 9, max: 14 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-20',
+        name: 'Bloodfeast',
+        class: 'demon_hunter',
+        role: 'tank',
+        avatar: '/static/images/avatars/2.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: true,
+      count: 6
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: 'any'
+    },
+    note: 'Denathrius mount farm. Multiple kills available.'
+  },
+  {
+    id: 'raid-16',
+    gameVersion: 'retail',
+    expansion: 'tww',
+    raidName: 'Manaforge Omega',
+    difficulty: 'heroic',
+    price: 1100000,
+    faction: 'alliance',
+    server: 'keltuzad',
+    poster: {
+      id: 'user-16',
+      name: 'Arcanemaster',
+      avatar: '/static/images/avatars/1.jpg',
+      credit: 67.0,
+      karma: 256,
+      isOnline: true
+    },
+    signups: 8,
+    rolesNeeded: ['healer', 'dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 55 * 60 * 1000,
+    avgPayTime: '2.5 Hours',
+    payLimit: '25 Minutes',
+    credibility: {
+      totalReviews: 98,
+      averageRating: 9.21,
+      karmaChange: 41.3,
+      riskLevel: 'low'
+    },
+    numberOfRuns: 1,
+    isTimed: false,
+    maxBuyers: 8,
+    currentBuyers: 5,
+    marketAveragePrice: 1050000,
+    requirements: {
+      minIOScore: 3100,
+      minIlvl: 637,
+      minRating: 2,
+      minKarma: 10
+    },
+    roleSlots: [
+      { role: 'tank', current: 2, max: 2 },
+      { role: 'healer', current: 2, max: 4 },
+      { role: 'dps', current: 10, max: 14 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-21',
+        name: 'Manaburn',
+        class: 'mage',
+        role: 'dps',
+        avatar: '/static/images/avatars/3.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: false,
+      count: 5
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: 'any'
+    },
+    note: 'Full heroic clear. New tier pieces available.'
+  },
+  {
+    id: 'raid-17',
+    gameVersion: 'classic',
+    expansion: 'wotlk',
+    raidName: 'Trial of the Crusader',
+    difficulty: '25n',
+    price: 650000,
+    faction: 'horde',
+    server: 'sulfuras',
+    poster: {
+      id: 'user-17',
+      name: 'Crusaderlord',
+      avatar: '/static/images/avatars/2.jpg',
+      credit: 82.0,
+      karma: 298,
+      isOnline: true
+    },
+    signups: 19,
+    rolesNeeded: ['tank', 'healer', 'dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 42 * 60 * 1000,
+    avgPayTime: '1.5 Hours',
+    payLimit: '20 Minutes',
+    credibility: {
+      totalReviews: 112,
+      averageRating: 9.15,
+      karmaChange: 43.2,
+      riskLevel: 'low'
+    },
+    numberOfRuns: 1,
+    isTimed: false,
+    maxBuyers: 10,
+    currentBuyers: 7,
+    marketAveragePrice: 620000,
+    requirements: {
+      minIOScore: 0,
+      minIlvl: 245,
+      minRating: 0,
+      minKarma: 5
+    },
+    roleSlots: [
+      { role: 'tank', current: 1, max: 2 },
+      { role: 'healer', current: 4, max: 6 },
+      { role: 'dps', current: 14, max: 17 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-22',
+        name: 'Tribunaldefender',
+        class: 'paladin',
+        role: 'tank',
+        avatar: '/static/images/avatars/4.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: false,
+      count: 7
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: 'any'
+    },
+    note: 'Quick TOC run. Trophy of the Crusade up for roll.'
+  },
+  {
+    id: 'raid-18',
+    gameVersion: 'retail',
+    expansion: 'tww',
+    raidName: 'Liberation of Undermine',
+    difficulty: 'normal',
+    price: 750000,
+    faction: 'horde',
+    server: 'bleeding-hollow',
+    poster: {
+      id: 'user-18',
+      name: 'Goblinboss',
+      avatar: '/static/images/avatars/3.jpg',
+      credit: 43.0,
+      karma: 167,
+      isOnline: false
+    },
+    signups: 7,
+    rolesNeeded: ['tank', 'healer', 'dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 2.5 * 60 * 60 * 1000,
+    avgPayTime: '2 Hours',
+    payLimit: '20 Minutes',
+    credibility: {
+      totalReviews: 61,
+      averageRating: 8.67,
+      karmaChange: 25.4,
+      riskLevel: 'medium'
+    },
+    numberOfRuns: 2,
+    isTimed: false,
+    maxBuyers: 12,
+    currentBuyers: 8,
+    marketAveragePrice: 800000,
+    requirements: {
+      minIOScore: 2900,
+      minIlvl: 628,
+      minRating: 0,
+      minKarma: -30
+    },
+    roleSlots: [
+      { role: 'tank', current: 1, max: 2 },
+      { role: 'healer', current: 2, max: 4 },
+      { role: 'dps', current: 7, max: 14 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-23',
+        name: 'Goldseeker',
+        class: 'rogue',
+        role: 'dps',
+        avatar: '/static/images/avatars/5.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: false,
+      count: 8
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: 'any'
+    },
+    note: 'Normal clear for gearing alts. Chill environment.'
+  },
+  {
+    id: 'raid-19',
+    gameVersion: 'classic',
+    expansion: 'vanilla',
+    raidName: 'Blackwing Lair',
+    difficulty: 'flex',
+    price: 320000,
+    faction: 'alliance',
+    server: 'pagle',
+    poster: {
+      id: 'user-19',
+      name: 'Nefariansbane',
+      avatar: '/static/images/avatars/4.jpg',
+      credit: 71.0,
+      karma: 245,
+      isOnline: true
+    },
+    signups: 24,
+    rolesNeeded: ['healer', 'dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 72 * 60 * 1000,
+    avgPayTime: '2.5 Hours',
+    payLimit: '25 Minutes',
+    credibility: {
+      totalReviews: 94,
+      averageRating: 9.08,
+      karmaChange: 37.6,
+      riskLevel: 'low'
+    },
+    numberOfRuns: 1,
+    isTimed: false,
+    maxBuyers: 15,
+    currentBuyers: 11,
+    marketAveragePrice: 350000,
+    requirements: {
+      minIOScore: 0,
+      minIlvl: 66,
+      minRating: 0,
+      minKarma: 0
+    },
+    roleSlots: [
+      { role: 'tank', current: 2, max: 2 },
+      { role: 'healer', current: 6, max: 8 },
+      { role: 'dps', current: 22, max: 30 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-24',
+        name: 'Razorgore',
+        class: 'warrior',
+        role: 'tank',
+        avatar: '/static/images/avatars/1.jpg'
+      },
+      {
+        id: 'member-25',
+        name: 'Chromaggus',
+        class: 'druid',
+        role: 'tank',
+        avatar: '/static/images/avatars/2.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: true,
+      count: 11
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: 'any'
+    },
+    note: 'BWL speedrun. Chromatic boots and DFT reserved.'
+  },
+  {
+    id: 'raid-20',
+    gameVersion: 'retail',
+    expansion: 'df',
+    raidName: "Amirdrassil, the Dream's Hope",
+    difficulty: 'mythic',
+    price: 9500000,
+    faction: 'horde',
+    server: 'illidan',
+    poster: {
+      id: 'user-20',
+      name: 'Dreamweaver',
+      avatar: '/static/images/avatars/5.jpg',
+      credit: 890.0,
+      karma: 1876,
+      isOnline: true
+    },
+    signups: 18,
+    rolesNeeded: ['dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 12 * 60 * 1000,
+    avgPayTime: '4.5 Hours',
+    payLimit: '50 Minutes',
+    credibility: {
+      totalReviews: 423,
+      averageRating: 9.96,
+      karmaChange: 234.7,
+      riskLevel: 'low'
+    },
+    numberOfRuns: 1,
+    isTimed: true,
+    maxBuyers: 2,
+    currentBuyers: 1,
+    marketAveragePrice: 9000000,
+    requirements: {
+      minIOScore: 3900,
+      minIlvl: 648,
+      minRating: 7,
+      minKarma: 90
+    },
+    roleSlots: [
+      { role: 'tank', current: 2, max: 2 },
+      { role: 'healer', current: 4, max: 4 },
+      { role: 'dps', current: 13, max: 14 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-26',
+        name: 'Fyrakk',
+        class: 'evoker',
+        role: 'dps',
+        avatar: '/static/images/avatars/3.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: true,
+      count: 1
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: ['hunter', 'rogue', 'warrior']
+    },
+    note: 'CE sales. Fyrakk mount guaranteed. All loot to buyer.'
+  },
+  {
+    id: 'raid-21',
+    gameVersion: 'retail',
+    expansion: 'sl',
+    raidName: 'Sanctum of Domination',
+    difficulty: 'normal',
+    price: 280000,
+    faction: 'alliance',
+    server: 'moonguard',
+    poster: {
+      id: 'user-21',
+      name: 'Sylvanassfan',
+      avatar: '/static/images/avatars/1.jpg',
+      credit: 28.0,
+      karma: 89,
+      isOnline: true
+    },
+    signups: 3,
+    rolesNeeded: ['tank', 'healer', 'dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 4.5 * 60 * 60 * 1000,
+    avgPayTime: '2 Hours',
+    payLimit: '20 Minutes',
+    credibility: {
+      totalReviews: 34,
+      averageRating: 7.95,
+      karmaChange: 14.2,
+      riskLevel: 'medium'
+    },
+    numberOfRuns: 3,
+    isTimed: false,
+    maxBuyers: 15,
+    currentBuyers: 10,
+    marketAveragePrice: 320000,
+    requirements: {
+      minIOScore: 2400,
+      minIlvl: 618,
+      minRating: 0,
+      minKarma: -60
+    },
+    roleSlots: [
+      { role: 'tank', current: 0, max: 2 },
+      { role: 'healer', current: 1, max: 4 },
+      { role: 'dps', current: 3, max: 14 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-27',
+        name: 'Mawwalker',
+        class: 'priest',
+        role: 'healer',
+        avatar: '/static/images/avatars/2.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: false,
+      count: 10
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: 'any'
+    },
+    note: 'Transmog farming. All Maw appearances available.'
+  },
+  {
+    id: 'raid-22',
+    gameVersion: 'classic',
+    expansion: 'tbc',
+    raidName: 'Sunwell Plateau',
+    difficulty: '25h',
+    price: 1500000,
+    faction: 'alliance',
+    server: 'faerlina',
+    poster: {
+      id: 'user-22',
+      name: 'Kiljaedenkiller',
+      avatar: '/static/images/avatars/2.jpg',
+      credit: 156.0,
+      karma: 534,
+      isOnline: false
+    },
+    signups: 21,
+    rolesNeeded: ['tank', 'dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 38 * 60 * 1000,
+    avgPayTime: '3 Hours',
+    payLimit: '30 Minutes',
+    credibility: {
+      totalReviews: 178,
+      averageRating: 9.52,
+      karmaChange: 67.8,
+      riskLevel: 'low'
+    },
+    numberOfRuns: 1,
+    isTimed: false,
+    maxBuyers: 6,
+    currentBuyers: 4,
+    marketAveragePrice: 1400000,
+    requirements: {
+      minIOScore: 0,
+      minIlvl: 154,
+      minRating: 0,
+      minKarma: 15
+    },
+    roleSlots: [
+      { role: 'tank', current: 1, max: 2 },
+      { role: 'healer', current: 6, max: 6 },
+      { role: 'dps', current: 16, max: 17 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-28',
+        name: 'Brutallusbuster',
+        class: 'warrior',
+        role: 'tank',
+        avatar: '/static/images/avatars/4.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: true,
+      count: 4
+    },
+    eligibleClasses: {
+      tank: ['warrior', 'paladin'],
+      healer: 'any',
+      dps: 'any'
+    },
+    note: 'Full SWP clear. Thori\'dal bow reserved to guild.'
+  },
+  {
+    id: 'raid-23',
+    gameVersion: 'retail',
+    expansion: 'tww',
+    raidName: 'Nerub-ar Palace',
+    difficulty: 'normal',
+    price: 850000,
+    faction: 'horde',
+    server: 'area-52',
+    poster: {
+      id: 'user-23',
+      name: 'Nerubianqueen',
+      avatar: '/static/images/avatars/3.jpg',
+      credit: 52.0,
+      karma: 178,
+      isOnline: true
+    },
+    signups: 10,
+    rolesNeeded: ['tank', 'healer', 'dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 95 * 60 * 1000,
+    avgPayTime: '2 Hours',
+    payLimit: '20 Minutes',
+    credibility: {
+      totalReviews: 72,
+      averageRating: 8.78,
+      karmaChange: 29.3,
+      riskLevel: 'low'
+    },
+    numberOfRuns: 2,
+    isTimed: false,
+    maxBuyers: 10,
+    currentBuyers: 6,
+    marketAveragePrice: 900000,
+    requirements: {
+      minIOScore: 2700,
+      minIlvl: 624,
+      minRating: 0,
+      minKarma: -20
+    },
+    roleSlots: [
+      { role: 'tank', current: 1, max: 2 },
+      { role: 'healer', current: 2, max: 4 },
+      { role: 'dps', current: 9, max: 14 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-29',
+        name: 'Spidersilk',
+        class: 'hunter',
+        role: 'dps',
+        avatar: '/static/images/avatars/5.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: false,
+      count: 6
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: 'any'
+    },
+    note: 'Normal mode for weekly vault. Fast and efficient.'
+  },
+  {
+    id: 'raid-24',
+    gameVersion: 'retail',
+    expansion: 'df',
+    raidName: 'Aberrus, the Shadowed Crucible',
+    difficulty: 'mythic',
+    price: 7200000,
+    faction: 'alliance',
+    server: 'stormrage',
+    poster: {
+      id: 'user-24',
+      name: 'Sarkarethdoom',
+      avatar: '/static/images/avatars/4.jpg',
+      credit: 678.0,
+      karma: 1567,
+      isOnline: true
+    },
+    signups: 19,
+    rolesNeeded: ['dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 18 * 60 * 1000,
+    avgPayTime: '4 Hours',
+    payLimit: '45 Minutes',
+    credibility: {
+      totalReviews: 367,
+      averageRating: 9.94,
+      karmaChange: 198.4,
+      riskLevel: 'low'
+    },
+    numberOfRuns: 1,
+    isTimed: true,
+    maxBuyers: 3,
+    currentBuyers: 2,
+    marketAveragePrice: 7000000,
+    requirements: {
+      minIOScore: 3700,
+      minIlvl: 646,
+      minRating: 7,
+      minKarma: 85
+    },
+    roleSlots: [
+      { role: 'tank', current: 2, max: 2 },
+      { role: 'healer', current: 4, max: 4 },
+      { role: 'dps', current: 13, max: 14 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-30',
+        name: 'Scalecommander',
+        class: 'evoker',
+        role: 'healer',
+        avatar: '/static/images/avatars/1.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: true,
+      count: 2
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: ['mage', 'warlock', 'hunter', 'evoker']
+    },
+    note: 'CE farm. Ahead of the Curve achievement included.'
+  },
+  {
+    id: 'raid-25',
+    gameVersion: 'classic',
+    expansion: 'wotlk',
+    raidName: 'Naxxramas',
+    difficulty: '10n',
+    price: 220000,
+    faction: 'horde',
+    server: 'grobbulus',
+    poster: {
+      id: 'user-25',
+      name: 'Kelthuzadpriest',
+      avatar: '/static/images/avatars/5.jpg',
+      credit: 31.0,
+      karma: 112,
+      isOnline: false
+    },
+    signups: 5,
+    rolesNeeded: ['tank', 'healer', 'dps'],
+    classesAllowed: 'all',
+    postedAt: Date.now() - 5.5 * 60 * 60 * 1000,
+    avgPayTime: '1.5 Hours',
+    payLimit: '15 Minutes',
+    credibility: {
+      totalReviews: 41,
+      averageRating: 8.23,
+      karmaChange: 16.7,
+      riskLevel: 'medium'
+    },
+    numberOfRuns: 2,
+    isTimed: false,
+    maxBuyers: 5,
+    currentBuyers: 3,
+    marketAveragePrice: 250000,
+    requirements: {
+      minIOScore: 0,
+      minIlvl: 200,
+      minRating: 0,
+      minKarma: -10
+    },
+    roleSlots: [
+      { role: 'tank', current: 1, max: 2 },
+      { role: 'healer', current: 1, max: 3 },
+      { role: 'dps', current: 3, max: 5 }
+    ],
+    groupMembers: [
+      {
+        id: 'member-31',
+        name: 'Plaguebringer',
+        class: 'death_knight',
+        role: 'tank',
+        avatar: '/static/images/avatars/2.jpg'
+      }
+    ],
+    buyerInfo: {
+      willParticipate: false,
+      count: 3
+    },
+    eligibleClasses: {
+      tank: 'any',
+      healer: 'any',
+      dps: 'any'
+    },
+    note: 'Easy Naxx 10 clear. Great for fresh 80s. All loot open.'
   }
 ];

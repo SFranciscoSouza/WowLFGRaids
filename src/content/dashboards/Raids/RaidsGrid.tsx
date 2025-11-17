@@ -13,7 +13,8 @@ import {
   Divider,
   AvatarGroup,
   Tooltip,
-  useTheme
+  useTheme,
+  Button
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -28,6 +29,7 @@ import BalanceIcon from '@mui/icons-material/Balance';
 import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
 import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 import HelpIcon from '@mui/icons-material/Help';
+import MessageIcon from '@mui/icons-material/Message';
 import {
   RaidPost,
   formatGold,
@@ -206,10 +208,17 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
         <Grid item xs={12} key={raid.id}>
           <RaidCard onClick={() => handleExpandClick(raid.id)}>
             <Box sx={{ p: 2 }}>
-              <Grid container spacing={2} alignItems="center">
+              <Grid container spacing={2} alignItems="stretch">
                 {/* Poster Avatar */}
-                <Grid item xs={12} md={1}>
-                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Grid item xs="auto">
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      height: '100%',
+                      alignItems: 'center'
+                    }}
+                  >
                     <Badge
                       overlap="circular"
                       anchorOrigin={{
@@ -228,11 +237,11 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
                 </Grid>
 
                 {/* Main Card Content */}
-                <Grid item xs={12} md={11}>
+                <Grid item xs>
                   <Box sx={{ p: 1 }}>
                     <Grid container spacing={2}>
                       {/* Raid Info */}
-                      <Grid item xs={12} sm={6} md={3.5}>
+                      <Grid item xs={12} sm={6} md={4}>
                         <Box>
                           <Typography variant="h4">
                             <Text color="info">{raid.raidName}</Text>
@@ -336,7 +345,7 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
                       </Grid>
 
                       {/* Roles and Signups */}
-                      <Grid item xs={12} sm={6} md={3}>
+                      <Grid item xs={12} sm={6} md={2.5}>
                         <Box>
                           <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
                             LF:
@@ -370,6 +379,58 @@ const RaidsGrid: FC<RaidsGridProps> = ({ raids }) => {
                         </Box>
                       </Grid>
                     </Grid>
+                  </Box>
+                </Grid>
+
+                {/* Signup Buttons - Always Visible */}
+                <Grid item xs="auto">
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 0.5,
+                      height: '100%',
+                      justifyContent: 'center'
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      sx={{ minWidth: 140, fontSize: '0.75rem' }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log('Signup as Booster for raid:', raid.id);
+                      }}
+                    >
+                      Booster Signup
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      size="small"
+                      sx={{ minWidth: 140, fontSize: '0.75rem' }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log('Signup as Boosted for raid:', raid.id);
+                      }}
+                    >
+                      Boosted Signup
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="info"
+                      size="small"
+                      startIcon={<MessageIcon sx={{ fontSize: 14 }} />}
+                      sx={{ minWidth: 140, fontSize: '0.75rem' }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log('Message poster:', raid.poster.id);
+                      }}
+                    >
+                      Message
+                    </Button>
                   </Box>
                 </Grid>
               </Grid>

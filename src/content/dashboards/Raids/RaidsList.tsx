@@ -1,14 +1,24 @@
 import { useState, useMemo } from 'react';
-import { Card, CardHeader, Divider, Box, Typography } from '@mui/material';
+import {
+  Card,
+  CardHeader,
+  Divider,
+  Box,
+  Typography,
+  Pagination
+} from '@mui/material';
 import RaidsFilters from './RaidsFilters';
 import RaidsSorting from './RaidsSorting';
 import RaidsGrid from './RaidsGrid';
 import { mockRaidPosts } from './mockRaids';
 import { RaidFilters, SortOption, RaidPost } from 'src/models/raid';
 
+const ITEMS_PER_PAGE = 10;
+
 function RaidsList() {
   const [filters, setFilters] = useState<RaidFilters>({});
   const [sortOption, setSortOption] = useState<SortOption>('posted_desc');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const applyFilters = (raids: RaidPost[]): RaidPost[] => {
     return raids.filter((raid) => {
@@ -87,6 +97,29 @@ function RaidsList() {
     return applySorting(filtered);
   }, [filters, sortOption]);
 
+  const totalPages = Math.ceil(filteredAndSortedRaids.length / ITEMS_PER_PAGE);
+
+  const paginatedRaids = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    return filteredAndSortedRaids.slice(startIndex, endIndex);
+  }, [filteredAndSortedRaids, currentPage]);
+
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleFilterChange = (newFilters: RaidFilters) => {
+    setFilters(newFilters);
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (newSort: SortOption) => {
+    setSortOption(newSort);
+    setCurrentPage(1);
+  };
+
   return (
     <Card>
       <CardHeader
@@ -95,15 +128,36 @@ function RaidsList() {
           <Typography variant="body2" color="text.secondary">
             {filteredAndSortedRaids.length} raid
             {filteredAndSortedRaids.length !== 1 ? 's' : ''} available
+            {totalPages > 1 &&
+              ` • Page ${currentPage} of ${totalPages}`}
           </Typography>
         }
       />
       <Divider />
       <Box sx={{ p: 3 }}>
-        <RaidsFilters filters={filters} onFilterChange={setFilters} />
+        <RaidsFilters filters={filters} onFilterChange={handleFilterChange} />
         <Divider sx={{ my: 2 }} />
-        <RaidsSorting sortOption={sortOption} onSortChange={setSortOption} />
-        <RaidsGrid raids={filteredAndSortedRaids} />
+        <RaidsSorting sortOption={sortOption} onSortChange={handleSortChange} />
+        <RaidsGrid raids={paginatedRaids} />
+        {totalPages > 1 && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              mt: 3
+            }}
+          >
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={handlePageChange}
+              color="primary"
+              size="large"
+              showFirstButton
+              showLastButton
+            />
+          </Box>
+        )}
       </Box>
     </Card>
   );
