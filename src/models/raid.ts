@@ -126,6 +126,7 @@ export interface RaidFilters {
   scheduledFrom?: number; // Unix timestamp
   scheduledTo?: number; // Unix timestamp
   bossFilter?: BossFilterType; // Filter by full clear or partial clear
+  searchQuery?: string; // Flexible search across raid name, difficulty, and boss names
 }
 
 export type SortOption =

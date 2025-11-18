@@ -11,7 +11,7 @@ import RaidsFilters from './RaidsFilters';
 import RaidsSorting, { ViewMode } from './RaidsSorting';
 import RaidsGrid from './RaidsGrid';
 import { mockRaidPosts } from './mockRaids';
-import { RaidFilters, SortOption, RaidPost } from 'src/models/raid';
+import { RaidFilters, SortOption, RaidPost, RAID_BOSSES } from 'src/models/raid';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -85,6 +85,70 @@ function RaidsList() {
 
         if (filters.bossFilter === 'partial' && raidIsFullClear) {
           return false;
+        }
+      }
+
+      // Smart search - filter by raid name, difficulty, and boss names
+      if (filters.searchQuery && filters.searchQuery.trim()) {
+        const query = filters.searchQuery.toLowerCase().trim();
+        const queryWords = query.split(/\s+/);
+
+        // Difficulty keyword mapping (with priority - longer keywords first)
+        const difficultyMap: Record<string, string[]> = {
+          normal: ['normal', 'n'],
+          heroic: ['heroic', 'hc', 'h'],
+          mythic: ['mythic', 'm']
+        };
+
+        // Check if query contains difficulty keywords
+        let matchesDifficulty = false;
+        let matchedDifficulty: string | null = null;
+        const wordsToRemove: string[] = [];
+
+        // Check each word in the query
+        for (const word of queryWords) {
+          for (const [difficulty, keywords] of Object.entries(difficultyMap)) {
+            for (const keyword of keywords) {
+              // Check if word matches keyword exactly, or if keyword starts with the word (for partial typing)
+              if (word === keyword || (keyword.length > 1 && keyword.startsWith(word))) {
+                wordsToRemove.push(word);
+                if (raid.difficulty === difficulty) {
+                  matchesDifficulty = true;
+                  matchedDifficulty = difficulty;
+                }
+                // Found a difficulty match, break to prioritize this match
+                break;
+              }
+            }
+            if (wordsToRemove.includes(word)) break;
+          }
+        }
+
+        // If difficulty keywords were found but don't match, filter out
+        if (wordsToRemove.length > 0 && !matchesDifficulty) {
+          return false;
+        }
+
+        // Remove difficulty keywords from query to search for raid/boss name
+        let nameQuery = queryWords
+          .filter(word => !wordsToRemove.includes(word))
+          .join(' ')
+          .trim();
+
+        // If there's remaining text, search in raid name and boss names
+        if (nameQuery) {
+          const raidNameMatch = raid.raidName.toLowerCase().includes(nameQuery);
+
+          // Check boss names
+          const raidBosses = RAID_BOSSES[raid.raidName] || [];
+          const bossNameMatch = raidBosses.some((boss) =>
+            boss.toLowerCase().includes(nameQuery)
+          );
+
+          // If neither raid name nor boss name matches, filter out
+          if (!raidNameMatch && !bossNameMatch) {
+            return false;
+          }
         }
       }
 

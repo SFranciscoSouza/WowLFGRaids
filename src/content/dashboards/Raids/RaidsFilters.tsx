@@ -9,8 +9,12 @@ import {
   Button,
   Grid,
   Typography,
-  Chip
+  Chip,
+  InputAdornment,
+  IconButton
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -131,6 +135,13 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
 
   const handleResetFilters = () => {
     onFilterChange({});
+  };
+
+  const handleSearchQueryChange = (query: string) => {
+    onFilterChange({
+      ...filters,
+      searchQuery: query || undefined
+    });
   };
 
   const getExpansionOptions = (): Expansion[] => {
@@ -458,6 +469,35 @@ const RaidsFiltersComponent: FC<RaidsFiltersProps> = ({
             </Button>
           </Grid>
         </Grid>
+
+        {/* Search Bar - Below all filters */}
+        <Box sx={{ mt: 3 }}>
+          <TextField
+            fullWidth
+            size="small"
+            placeholder="Search by Raid, Difficulty or Boss Name..."
+            value={filters.searchQuery || ''}
+            onChange={(e) => handleSearchQueryChange(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+              endAdornment: filters.searchQuery && (
+                <InputAdornment position="end">
+                  <IconButton
+                    size="small"
+                    onClick={() => handleSearchQueryChange('')}
+                    edge="end"
+                  >
+                    <ClearIcon />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+          />
+        </Box>
       </Box>
     </LocalizationProvider>
   );
